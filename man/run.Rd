@@ -4,7 +4,7 @@
 \alias{run}
 \title{Run a containerised command, and wait until finished}
 \usage{
-run(container_id, command, extra_args = NULL, volumes = NULL,
+run(container_id, command, args = NULL, volumes = NULL,
   workspace = NULL, environment_variables = NULL, debug = FALSE,
   verbose = FALSE)
 }
@@ -12,6 +12,8 @@ run(container_id, command, extra_args = NULL, volumes = NULL,
 \item{container_id}{The name of the container, usually the repository name on dockerhub or singularityhub}
 
 \item{command}{Character scalar, the command to run.}
+
+\item{args}{Character vector, arguments to the command.}
 
 \item{volumes}{Which volumes to be mounted}
 

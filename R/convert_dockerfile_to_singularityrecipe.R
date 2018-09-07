@@ -28,10 +28,10 @@ convert_dockerfile_to_singularityrecipe <- function(
   # read docker file, detect commands with newlines
   lines <-
     readr::read_lines(dockerfile) %>%
-    gsub("# .*", "", .) %>%
-    discard(~ grepl("^ *$", .)) %>%
+    str_replace_all("# .*", "") %>%
+    discard(function(x) grepl("^ *$", x)) %>%
     paste(collapse = "\n") %>%
-    gsub(" *\\\\\n *", " <NEWLINEPLACEHOLDER>", .) %>%
+    str_replace_all(" *\\\\\n *", " <NEWLINEPLACEHOLDER>") %>%
     strsplit("\n") %>%
     first()
 
@@ -77,7 +77,7 @@ convert_dockerfile_to_singularityrecipe <- function(
     post,
     runscript
   ) %>%
-    gsub("<NEWLINEPLACEHOLDER>", "\\\\\n      ", .)
+    str_replace_all("<NEWLINEPLACEHOLDER>", "\\\\\n      ")
 
   # write to file
   readr::write_lines(output, singularityrecipe)

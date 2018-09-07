@@ -1,15 +1,17 @@
 fix_windows_path <- function(path) {
-  path <- path %>% gsub("\\\\", "/", .)
+  path <- str_replace_all(path, "\\\\", "/")
 
-  start <- path %>% sub("^([a-zA-Z]):/.*", "/\\1", .) %>% tolower
+  start <-
+    str_replace_all(path, "^([a-zA-Z]):/.*", "/\\1") %>%
+    tolower
 
-  path %>% sub("[^:/]:", start, .)
+  str_replace(path, "[^:/]:", start)
 }
 
 fix_macosx_tmp <- function(path) {
-  gsub("^/var/", "/tmp/", path)
+  str_replace_all(path, "^/var/", "/tmp/")
 }
 
 unfix_windows_path <- function(path) {
-  path %>% gsub("^/c/", "C:/", .)
+  str_replace_all(path, "^/c/", "C:/")
 }

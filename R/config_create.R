@@ -1,6 +1,6 @@
 detect_backend <- function() {
   witches <- Sys.which(c("docker", "singularity"))
-  witches %>% keep(~ . != "") %>% names() %>% first()
+  witches %>% keep(function(x) x != "") %>% names() %>% first()
 }
 
 #' @title Backend configuration for containerisation
@@ -20,7 +20,7 @@ detect_backend <- function() {
 #' create_config(
 #'   backend =
 #'     get_env_or_null("BABELWHALE_BACKEND") \%||\%
-#'     "docker"
+#'     detect_backend()
 #' )
 #'
 #' @examples
@@ -50,11 +50,11 @@ create_config <- function(
 #' @rdname create_config
 #' @export
 create_docker_config <- function() {
-  list(backend = "docker") %>% dynutils::add_class("babelwhale::config")
+  list(backend = "docker")
 }
 
 #' @param cache_dir A folder in which to store the singularity images. Each TI method will require about 1GB of space.
-#' @param prebuild If the singularity images are not cached, they will need to be downloaded every time a method is run.
+#' @param use_cache If the singularity images are not cached, they will need to be downloaded every time a method is run.
 #'
 #' @usage
 #' create_singularity_config(
@@ -81,6 +81,5 @@ create_singularity_config <- function(
     backend = "singularity",
     use_cache,
     cache_dir
-  ) %>%
-    dynutils::add_class("babelwhale::config")
+  )
 }

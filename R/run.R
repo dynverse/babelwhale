@@ -12,7 +12,7 @@
 run <- function(
   container_id,
   command,
-  extra_args = NULL,
+  args = NULL,
   volumes = NULL,
   workspace = NULL,
   environment_variables = NULL,
@@ -33,7 +33,7 @@ run <- function(
   volumes <- c(volumes, paste0(fix_windows_path(safe_tmp), ":/tmp2"))
 
   if (container_exec == "docker") {
-    volumes <- unlist(map(volumes, ~ c("-v", .)))
+    volumes <- unlist(map(volumes, function(x) c("-v", x)))
   } else if (container_exec == "singularity") {
     volumes <- c("-B", paste0(volumes, collapse = ","))
   }
@@ -41,7 +41,7 @@ run <- function(
   # check debug
   if (debug) {
     command <- "bash"
-    extra_args <- NULL
+    args <- NULL
   }
 
   # process workspace
@@ -70,14 +70,13 @@ run <- function(
     }
 
     # add -e fllags to each environment variable
-    env <- unlist(map(environment_variables, ~ c("-e", .)))
-
-    # determine command arguments
-    args <- c("run", command, env, workspace, volumes, container_id, extra_args)
+    env <- unlist(map(environment_variables, function(x) c("-e", x)))
 
     # do not pass env directly to processx
-    env <- NULL
+    processx_env <- NULL
 
+    # determine command arguments
+    processx_args <- c("run", command, env, workspace, volumes, container_id, args)
   }
 
 
@@ -87,7 +86,7 @@ run <- function(
   if (container_exec == "singularity") {
     # create caches and tmpdirs
     tempcache <- create_concurrent_dir(dest_dir = config$cache_dir)
-    on.exit(finalise_concurrent_dir(temp_dir = tempcache, dest_dir = image_folder))
+    on.exit(finalise_concurrent_dir(temp_dir = tempcache, dest_dir = config$cache_dir))
 
     localcache <- safe_tempdir("singularity_localcachedir")
     on.exit(unlink(localcache, force = TRUE, recursive = TRUE))
@@ -95,10 +94,10 @@ run <- function(
     tmpdir <- safe_tempdir("singularity_tmpdir")
     on.exit(unlink(tmpdir, force = TRUE, recursive = TRUE))
 
-    env <- c(
+    processx_env <- c(
       set_names(
-        environment_variables %>% gsub("^.*=", "", .),
-        environment_variables %>% gsub("^(.*)=.*$", "SINGULARITYENV_\\1", .)
+        environment_variables %>% str_replace_all("^.*=", ""),
+        environment_variables %>% str_replace_all("^(.*)=.*$", "SINGULARITYENV_\\1")
       ),
       "SINGULARITY_CACHEDIR" = tempcache,
       "SINGULARITY_LOCALCACHEDIR" = localcache,
@@ -110,13 +109,13 @@ run <- function(
     if (!config$use_cache) {
       container <- paste0("shub://", container_id)
     } else {
-      container <- singularity_image_path(config, container_id)
+      container <- singularity_image_path(container_id)
     }
 
     # determine command arguments
-    args <- c(
+    processx_args <- c(
       ifelse(is.null(command), "run", "exec"),
-      workspace, volumes, container, command, extra_args
+      workspace, volumes, container, command, args
     )
   }
 
@@ -126,7 +125,15 @@ run <- function(
   #########################
   if (!debug) {
     # run container
-    process <- processx::run(container_exec, args, env = env, echo = verbose, echo_cmd = verbose, spinner = TRUE, error_on_status = FALSE)
+    process <- processx::run(
+      command = container_exec,
+      args = processx_args,
+      env = processx_env,
+      echo = verbose,
+      echo_cmd = verbose,
+      spinner = TRUE,
+      error_on_status = FALSE
+    )
 
     if (process$status != 0 && !verbose) {
       cat(process$stderr)

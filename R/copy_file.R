@@ -41,10 +41,10 @@ copy_file <- function(
     run(
       container_id = container_id,
       command = "cp",
-      extra_args = c(path_container, "/copy_mount"),
+      args = c(path_container, "/copy_mount"),
       volumes = paste0(temp_folder, ":/copy_mount")
     )
 
-    file.copy(paste0(temp_folder, gsub(".*/", "", path_container)), path_local)
+    file.copy(file.path(temp_folder, basename(path_container)), path_local)
   }
 }
