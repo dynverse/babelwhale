@@ -1,38 +1,42 @@
-create_concurrent_dir <- function(
-  cachedir = get_env_or_null("SINGULARITY_CACHEDIR") %||% paste0(get_env_or_null("HOME"), "/.singularity")
-) {
-  tempcache <- safe_tempdir("tempcache")
+create_concurrent_dir <- function(dest_dir) {
+  temp_dir <- safe_tempdir("temp_dir")
 
-  walk(list.dirs(cachedir, full.names = FALSE), ~ dir.create(paste0(tempcache, "/", .), showWarnings = FALSE, recursive = TRUE))
+  walk(
+    list.dirs(dest_dir, full.names = FALSE),
+    function(subdir) {
+      path <- paste0(temp_dir, "/", subdir)
+      if (!file.exists(path)) dir.create(path, recursive = TRUE)
+    }
+  )
 
-  cached_files <- list.files(cachedir, recursive = TRUE, full.names = FALSE)
-  walk(cached_files, function(file) {
-    tempfile <- file.path(tempcache, file)
-    cachedfile <- file.path(cachedir, file)
-    file.symlink(cachedfile, tempfile)
+  dest_files <- list.files(dest_dir, recursive = TRUE, full.names = FALSE)
+  walk(dest_files, function(file) {
+    temp_file <- file.path(temp_dir, file)
+    dest_file <- file.path(dest_dir, file)
+    file.symlink(dest_file, temp_file)
   })
 
-  tempcache
+  temp_dir
 }
 
 finalise_concurrent_dir <- function(
-  tempcache,
-  cachedir = get_env_or_null("SINGULARITY_CACHEDIR") %||% paste0(get_env_or_null("HOME"), "/.singularity")
+  temp_dir,
+  dest_dir
 ) {
-  cache_files <- list.files(cachedir, recursive = TRUE, full.names = FALSE)
-  temp_files <- list.files(tempcache, recursive = TRUE, full.names = FALSE)
+  dest_files <- list.files(dest_dir, recursive = TRUE, full.names = FALSE)
+  temp_files <- list.files(temp_dir, recursive = TRUE, full.names = FALSE)
 
-  new_files <- setdiff(temp_files, cache_files)
+  new_files <- setdiff(temp_files, dest_files)
   walk(new_files, function(file) {
-    tempfile <- file.path(tempcache, file)
-    cachedfile <- file.path(cachedir, file)
+    temp_file <- file.path(temp_dir, file)
+    dest_file <- file.path(dest_dir, file)
 
     # just to make sure, check whether the new file is not a symbolic link
     # and whether it does not exist yet in the global cache before copying
-    if (Sys.readlink(tempfile) == "" && !file.exists(cachedfile)) {
-      file.copy(tempfile, cachedfile)
+    if (Sys.readlink(temp_file) == "" && !file.exists(dest_file)) {
+      file.copy(temp_file, dest_file)
     }
   })
 
-  unlink(tempcache, recursive = TRUE)
+  unlink(temp_dir, recursive = TRUE)
 }

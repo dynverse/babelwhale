@@ -1,14 +1,19 @@
+detect_backend <- function() {
+  witches <- Sys.which(c("docker", "singularity"))
+  witches %>% keep(~ . != "") %>% names() %>% first()
+}
+
 #' Backend configuration for containerisation
 #'
-#' @param type Which backend to use. Can be either `"docker"` or `"singularity"`.
+#' @param backend Which backend to use. Can be either `"docker"` or `"singularity"`.
 #'   If the value of this parameter is not passed explicitly, the default is defined by
-#'   the `"BABELWHALE_RUN_ENVIRONMENT"` environment variable, or otherwise just `"docker"`.
+#'   the `"BABELWHALE_BACKEND"` environment variable, or otherwise just `"docker"`.
 #' @param ... Parameters to pass to `create_docker_config()` or `create_singularity_config()`.
 #'
 #' @usage
 #' create_config(
-#'   type =
-#'     get_env_or_null("DYNWRAP_RUN_ENVIRONMENT") \%||\%
+#'   backend =
+#'     get_env_or_null("BABELWHALE_BACKEND") \%||\%
 #'     "docker",
 #'   ...
 #' )
@@ -19,23 +24,20 @@
 #' set_default_config(config)
 #'
 #' config <- create_singularity_config(
-#'   images_folder = "~/dynwrap_singularity_images/"
+#'   cache_dir = "~/babelwhale_singularity_images/"
 #' )
 #' set_default_config(config)
 #' }
 #'
 #' @export
 create_config <- function(
-  type = get_env_or_null("DYNWRAP_RUN_ENVIRONMENT") %||% "docker",
+  backend = get_env_or_null("BABELWHALE_BACKEND") %||% detect_backend(),
   ...
 ) {
-
-  if (!type %in% c("docker", "singularity")) {
-    stop("Container type must be either \"docker\" or \"singularity\"")
-  }
+  backend <- match.arg(backend, choices = c("docker", "singularity"))
 
   switch(
-    type,
+    backend,
     docker = create_docker_config(...),
     singularity = create_singularity_config(...)
   )
@@ -44,37 +46,37 @@ create_config <- function(
 #' @rdname create_config
 #' @export
 create_docker_config <- function() {
-  list(type = "docker") %>% dynutils::add_class("babelwhale::config")
+  list(backend = "docker") %>% dynutils::add_class("babelwhale::config")
 }
 
+#' @param cache_dir A folder in which to store the singularity images. Each TI method will require about 1GB of space.
 #' @param prebuild If the singularity images are not prebuilt, they will need to be built every time a method is run.
-#' @param images_folder A folder in which to store the singularity images. Each TI method will require about 1GB of space.
 #'
 #' @usage
 #' create_singularity_config(
-#'   images_folder =
-#'     get_env_or_null("DYNWRAP_SINGULARITY_IMAGES_FOLDER") \%||\%
+#'   cache_dir =
+#'     get_env_or_null("SINGULARITY_CACHEDIR") \%||\%
 #'     "./",
-#'   prebuild = images_folder != "./"
+#'   use_cache = cache_dir != "./"
 #' )
 #'
 #' @rdname create_config
 #' @export
 create_singularity_config <- function(
-  images_folder = get_env_or_null("DYNWRAP_SINGULARITY_IMAGES_FOLDER") %||% "./",
-  prebuild = images_folder != "./"
+  cache_dir = get_env_or_null("SINGULARITY_CACHEDIR") %||% "./",
+  use_cache = cache_dir != "./"
 ) {
-  if (prebuild && images_folder == "./") {
+  if (use_cache && cache_dir == "./") {
     warning(
-      "No singularity images folder specified, will use the working directory.\n",
-      "Check `?singularity` for more information on how to define the images folder."
+      "No singularity cache directory specified, will use the working directory.\n",
+      "Check `?create_singularity_config` for more information on how to define the cache directory."
     )
   }
 
   lst(
-    type = "singularity",
-    prebuild,
-    images_folder
+    backend = "singularity",
+    use_cache,
+    cache_dir
   ) %>%
     dynutils::add_class("babelwhale::config")
 }

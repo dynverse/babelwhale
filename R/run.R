@@ -1,13 +1,23 @@
+#' Run a containerised command, and wait until finished
+#'
+#' @param container_id The name of the container, usually the repository name on dockerhub or singularityhub
+#' @inheritParams processx::run
+#' @param volumes Which volumes to be mounted
+#' @param workspace Which working directory to run the command in.
+#' @param environment_variables A character vector of environment variables. Format: `c("ENVVAR=VALUE")`.
+#' @param debug If `TRUE`, a command will be printed for the user to execute.
+#' @param verbose Whether or not to print output
+#'
 #' @importFrom crayon bold
 run <- function(
   container_id,
   command,
   extra_args = NULL,
-  debug = FALSE,
-  verbose = FALSE,
   volumes = NULL,
   workspace = NULL,
-  environment_variables = NULL
+  environment_variables = NULL,
+  debug = FALSE,
+  verbose = FALSE
 ) {
   config <- get_default_config()
 
@@ -15,7 +25,7 @@ run <- function(
   #### PREPROCESS PARAMETERS ####
   ###############################
   # determine executable
-  container_exec <- match.arg(config$type, choices = c("docker", "singularity"))
+  container_exec <- Sys.which(config$backend) %>% unname()
 
   # add safe tempdir to volumes
   safe_tmp <- safe_tempdir("tmp")
@@ -76,8 +86,14 @@ run <- function(
   ######################################
   if (container_exec == "singularity") {
     # create caches and tmpdirs
-    tempcache <- create_concurrent_dir()
-    on.exit(finalise_concurrent_dir(tempcache))
+    tempcache <- create_concurrent_dir(dest_dir = config$cache_dir)
+    on.exit(finalise_concurrent_dir(temp_dir = tempcache, dest_dir = image_folder))
+
+    localcache <- safe_tempdir("singularity_localcachedir")
+    on.exit(unlink(localcache, force = TRUE, recursive = TRUE))
+
+    tmpdir <- safe_tempdir("singularity_tmpdir")
+    on.exit(unlink(tmpdir, force = TRUE, recursive = TRUE))
 
     env <- c(
       set_names(
@@ -85,13 +101,13 @@ run <- function(
         environment_variables %>% gsub("^(.*)=.*$", "SINGULARITYENV_\\1", .)
       ),
       "SINGULARITY_CACHEDIR" = tempcache,
-      "SINGULARITY_LOCALCACHEDIR" = safe_tempdir("singularity_localcachedir"),
-      "SINGULARITY_TMPDIR" = safe_tempdir("singularity_tmpdir"),
+      "SINGULARITY_LOCALCACHEDIR" = localcache,
+      "SINGULARITY_TMPDIR" = tmpdir,
       "PATH" = Sys.getenv("PATH") # pass the path along
     )
 
     # pull container directly from shub or use a prebuilt image
-    if (!config$prebuild) {
+    if (!config$use_cache) {
       container <- paste0("shub://", container_id)
     } else {
       container <- singularity_image_path(config, container_id)

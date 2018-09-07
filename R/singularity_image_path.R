@@ -6,7 +6,7 @@ singularity_image_path <- function(container_id) {
     container_id %>%
     stringr::str_replace_all("@sha256:", "_hash-") %>%
     stringr::str_replace_all(":", "_tag-") %>%
-    paste0(config$images_folder, ., ".simg") %>%
+    paste0(config$cache_dir, ., ".simg") %>%
     normalizePath(mustWork = FALSE)
 
   dir.create(stringr::str_replace(path, "[^/]*.simg$", ""), recursive = TRUE, showWarnings = FALSE)

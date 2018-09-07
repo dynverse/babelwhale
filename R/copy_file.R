@@ -1,3 +1,12 @@
+#' Copy a file from a container to the host system
+#'
+#' @inheritParams run
+#' @param path_container The path of the file inside the container
+#' @param path_local The path of the file on the host system
+#'
+#' @export
+#'
+#' @importFrom utils tail
 copy_file <- function(
   container_id,
   path_container,
@@ -5,7 +14,7 @@ copy_file <- function(
 ) {
   config <- get_default_config()
 
-  if (config$type == "docker") {
+  if (config$backend == "docker") {
     # start container
     output <- processx::run(
       "docker",
@@ -25,7 +34,7 @@ copy_file <- function(
     processx::run("docker", c("rm", id), stderr_callback = print_processx)
 
     invisible()
-  } else if (config$type == "singularity") {
+  } else if (config$backend == "singularity") {
     temp_folder <- safe_tempdir("")
     on.exit(unlink(temp_folder, recursive = TRUE, force = TRUE))
 
