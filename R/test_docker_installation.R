@@ -27,12 +27,12 @@ test_docker_installation <- function(detailed = FALSE) {
     } else {
       installation_url <- switch(
         tolower(Sys.info()["sysname"]),
-        windows = "https://docs.docker.com/docker-for-windows/install/",
+        windows = "https://docs.docker.com/docker-for-windows/install/ (for Windows 10) or https://docs.docker.com/toolbox/toolbox_install_windows/ (for older Windows installations)",
         darwin = "https://docs.docker.com/docker-for-mac/install/",
         "https://docs.docker.com/install/"
       )
 
-      stop(crayon::red("\u274C An installation of docker is necessary to run this method. See https://docs.docker.com/install/ for instructions."))
+      stop(crayon::red(glue::glue("\u274C An installation of docker is necessary to run this method. See {installation_url} for instructions.")))
     }
 
     # test if docker daemon is running
