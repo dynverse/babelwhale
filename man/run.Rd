@@ -17,9 +17,9 @@ run(container_id, command, extra_args = NULL, volumes = NULL,
 
 \item{workspace}{Which working directory to run the command in.}
 
-\item{environment_variables}{A character vector of environment variables. Format: `c("ENVVAR=VALUE")`.}
+\item{environment_variables}{A character vector of environment variables. Format: \code{c("ENVVAR=VALUE")}.}
 
-\item{debug}{If `TRUE`, a command will be printed for the user to execute.}
+\item{debug}{If \code{TRUE}, a command will be printed for the user to execute.}
 
 \item{verbose}{Whether or not to print output}
 }

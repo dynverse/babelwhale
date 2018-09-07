@@ -3,13 +3,24 @@ Version: 0.0.0.9000
 Title: Talking to Docker and Singularity containers
 Description: Talking to Docker and Singularity containers.
 Authors@R: c(
-  person("Robrecht", "Cannoodt", email = "rcannood@gmail.com", role = c("aut")),
-  person("Wouter", "Saelens", email = "wouter.saelens@ugent.be", role = c("aut", "cre")))
+    person(
+      "Robrecht", 
+      "Cannoodt", 
+      email = "rcannood@gmail.com", 
+      role = c("aut", "cre"),
+      comment = c(ORCID = "0000-0003-3641-729X", github = "rcannood")
+    ),
+    person(
+      "Wouter", 
+      "Saelens", 
+      email = "wouter.saelens@ugent.be", 
+      role = c("aut"), 
+      comment = c(ORCID = "0000-0002-7114-6248", github = "zouter")
+    )
+  )
 License: GPL-3
-Encoding: UTF-8
-LazyData: true
-ByteCompile: true
-RoxygenNote: 6.1.0
+Depends:
+  R (>= 3.0.0)
 Imports:
   crayon,
   dplyr,
@@ -20,3 +31,9 @@ Imports:
   readr,
   stringr,
   utils
+Encoding: UTF-8
+LazyData: true
+ByteCompile: true
+RoxygenNote: 6.1.0
+Roxygen: list(markdown = TRUE)
+

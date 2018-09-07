@@ -3,19 +3,24 @@ detect_backend <- function() {
   witches %>% keep(~ . != "") %>% names() %>% first()
 }
 
-#' Backend configuration for containerisation
+#' @title Backend configuration for containerisation
+#'
+#' @description
+#' It is advised to define the `"BABELWHALE_BACKEND"` environment variable as `"docker"` or `"singularity"`.
+#'
+#' When using singularity, also define the `"SINGULARITY_CACHEDIR"` environment variable,
+#' which is the folder where the singularity images will be cached.
+#'  Each TI method will require about 1GB of space.
+#'
+#' Alternatively, you can create a config and save it using `set_default_config()`.
 #'
 #' @param backend Which backend to use. Can be either `"docker"` or `"singularity"`.
-#'   If the value of this parameter is not passed explicitly, the default is defined by
-#'   the `"BABELWHALE_BACKEND"` environment variable, or otherwise just `"docker"`.
-#' @param ... Parameters to pass to `create_docker_config()` or `create_singularity_config()`.
 #'
 #' @usage
 #' create_config(
 #'   backend =
 #'     get_env_or_null("BABELWHALE_BACKEND") \%||\%
-#'     "docker",
-#'   ...
+#'     "docker"
 #' )
 #'
 #' @examples
@@ -31,15 +36,14 @@ detect_backend <- function() {
 #'
 #' @export
 create_config <- function(
-  backend = get_env_or_null("BABELWHALE_BACKEND") %||% detect_backend(),
-  ...
+  backend = get_env_or_null("BABELWHALE_BACKEND") %||% detect_backend()
 ) {
   backend <- match.arg(backend, choices = c("docker", "singularity"))
 
   switch(
     backend,
-    docker = create_docker_config(...),
-    singularity = create_singularity_config(...)
+    docker = create_docker_config(),
+    singularity = create_singularity_config()
   )
 }
 
@@ -50,7 +54,7 @@ create_docker_config <- function() {
 }
 
 #' @param cache_dir A folder in which to store the singularity images. Each TI method will require about 1GB of space.
-#' @param prebuild If the singularity images are not prebuilt, they will need to be built every time a method is run.
+#' @param prebuild If the singularity images are not cached, they will need to be downloaded every time a method is run.
 #'
 #' @usage
 #' create_singularity_config(

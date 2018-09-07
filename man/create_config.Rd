@@ -11,8 +11,7 @@
 create_config(
   backend =
     get_env_or_null("BABELWHALE_BACKEND") \%||\%
-    "docker",
-  ...
+    "docker"
 )
 
 create_docker_config()
@@ -29,11 +28,7 @@ get_default_config()
 set_default_config(config, permanent = TRUE)
 }
 \arguments{
-\item{backend}{Which backend to use. Can be either `"docker"` or `"singularity"`.
-If the value of this parameter is not passed explicitly, the default is defined by
-the `"BABELWHALE_BACKEND"` environment variable, or otherwise just `"docker"`.}
-
-\item{...}{Parameters to pass to `create_docker_config()` or `create_singularity_config()`.}
+\item{backend}{Which backend to use. Can be either \code{"docker"} or \code{"singularity"}.}
 
 \item{cache_dir}{A folder in which to store the singularity images. Each TI method will require about 1GB of space.}
 
@@ -41,10 +36,16 @@ the `"BABELWHALE_BACKEND"` environment variable, or otherwise just `"docker"`.}
 
 \item{permanent}{Whether or not to save the config file permanently}
 
-\item{prebuild}{If the singularity images are not prebuilt, they will need to be built every time a method is run.}
+\item{prebuild}{If the singularity images are not cached, they will need to be downloaded every time a method is run.}
 }
 \description{
-Backend configuration for containerisation
+It is advised to define the \code{"BABELWHALE_BACKEND"} environment variable as \code{"docker"} or \code{"singularity"}.
+
+When using singularity, also define the \code{"SINGULARITY_CACHEDIR"} environment variable,
+which is the folder where the singularity images will be cached.
+Each TI method will require about 1GB of space.
+
+Alternatively, you can create a config and save it using \code{set_default_config()}.
 }
 \examples{
 \dontrun{
