@@ -1,5 +1,6 @@
+#' @importFrom dynutils safe_tempdir
 create_concurrent_dir <- function(dest_dir) {
-  temp_dir <- safe_tempdir("temp_dir")
+  temp_dir <- dynutils::safe_tempdir("temp_dir")
 
   walk(
     list.dirs(dest_dir, full.names = FALSE),
@@ -23,6 +24,7 @@ finalise_concurrent_dir <- function(
   temp_dir,
   dest_dir
 ) {
+  on.exit(unlink(temp_dir, recursive = TRUE))
   dest_files <- list.files(dest_dir, recursive = TRUE, full.names = FALSE)
   temp_files <- list.files(temp_dir, recursive = TRUE, full.names = FALSE)
 
@@ -38,5 +40,5 @@ finalise_concurrent_dir <- function(
     }
   })
 
-  unlink(temp_dir, recursive = TRUE)
+
 }

@@ -5,6 +5,7 @@
 #' @importFrom glue glue
 #' @importFrom crayon red green bold
 #' @importFrom stringr str_pad
+#' @importFrom dynutils safe_tempdir
 #'
 #' @export
 test_docker_installation <- function(detailed = FALSE) {
@@ -81,7 +82,7 @@ test_docker_installation <- function(detailed = FALSE) {
     message(crayon::green("\u2714 Docker can run image"))
 
     # test if docker volume can be mounted
-    volume_dir <- safe_tempdir("")
+    volume_dir <- dynutils::safe_tempdir("")
     output <- processx::run("docker", c("run", "-v", glue::glue("{volume_dir}:/mount"), "alpine:3.7"), error_on_status = FALSE, stderr_callback = print_processx)
     if (output$status != 0) {
       stop(crayon::red(glue::glue(

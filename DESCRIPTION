@@ -24,6 +24,7 @@ Depends:
 Imports:
   crayon,
   dplyr,
+  dynutils,
   glue,
   jsonlite,
   processx,
@@ -31,6 +32,8 @@ Imports:
   readr,
   stringr,
   utils
+Remotes:
+  dynverse/dynutils
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true

@@ -9,6 +9,7 @@
 #' @param verbose Whether or not to print output
 #'
 #' @importFrom crayon bold
+#' @importFrom dynutils safe_tempdir
 #'
 #' @export
 run <- function(
@@ -30,7 +31,7 @@ run <- function(
   container_exec <- Sys.which(config$backend) %>% unname()
 
   # add safe tempdir to volumes
-  safe_tmp <- safe_tempdir("tmp")
+  safe_tmp <- dynutils::safe_tempdir("tmp")
   on.exit(unlink(safe_tmp, recursive = TRUE))
   volumes <- c(volumes, paste0(fix_windows_path(safe_tmp), ":/tmp2"))
 
@@ -90,10 +91,10 @@ run <- function(
     tempcache <- create_concurrent_dir(dest_dir = config$cache_dir)
     on.exit(finalise_concurrent_dir(temp_dir = tempcache, dest_dir = config$cache_dir))
 
-    localcache <- safe_tempdir("singularity_localcachedir")
+    localcache <- dynutils::safe_tempdir("singularity_localcachedir")
     on.exit(unlink(localcache, force = TRUE, recursive = TRUE))
 
-    tmpdir <- safe_tempdir("singularity_tmpdir")
+    tmpdir <- dynutils::safe_tempdir("singularity_tmpdir")
     on.exit(unlink(tmpdir, force = TRUE, recursive = TRUE))
 
     processx_env <- c(

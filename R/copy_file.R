@@ -7,6 +7,7 @@
 #' @export
 #'
 #' @importFrom utils tail
+#' @importFrom dynutils safe_tempdir
 copy_file <- function(
   container_id,
   path_container,
@@ -35,7 +36,7 @@ copy_file <- function(
 
     invisible()
   } else if (config$backend == "singularity") {
-    temp_folder <- safe_tempdir("")
+    temp_folder <- dynutils::safe_tempdir("")
     on.exit(unlink(temp_folder, recursive = TRUE, force = TRUE))
 
     run(

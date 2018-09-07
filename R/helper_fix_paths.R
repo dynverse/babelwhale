@@ -8,10 +8,6 @@ fix_windows_path <- function(path) {
   str_replace(path, "[^:/]:", start)
 }
 
-fix_macosx_tmp <- function(path) {
-  str_replace_all(path, "^/var/", "/tmp/")
-}
-
 unfix_windows_path <- function(path) {
   str_replace_all(path, "^/c/", "C:/")
 }
