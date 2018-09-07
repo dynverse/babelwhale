@@ -9,6 +9,8 @@
 #' @param verbose Whether or not to print output
 #'
 #' @importFrom crayon bold
+#'
+#' @export
 run <- function(
   container_id,
   command,

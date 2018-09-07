@@ -1,4 +1,10 @@
+#' Determine the cached path of singularity images
+#'
+#' @inheritParams run
+#'
 #' @importFrom stringr str_replace_all str_replace
+#'
+#' @export
 singularity_image_path <- function(container_id) {
   config <- get_default_config()
 
