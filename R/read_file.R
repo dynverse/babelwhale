@@ -1,4 +1,10 @@
+#' Read a file from a container
+#'
+#' @inheritParams copy_file
+#'
 #' @importFrom readr read_lines
+#'
+#' @export
 read_file <- function(
   container_id,
   path_container
