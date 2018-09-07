@@ -28,16 +28,16 @@ run <- function(
   #### PREPROCESS PARAMETERS ####
   ###############################
   # determine executable
-  container_exec <- Sys.which(config$backend) %>% unname()
+  processx_command <- Sys.which(config$backend) %>% unname()
 
   # add safe tempdir to volumes
   safe_tmp <- dynutils::safe_tempdir("tmp")
   on.exit(unlink(safe_tmp, recursive = TRUE))
   volumes <- c(volumes, paste0(fix_windows_path(safe_tmp), ":/tmp2"))
 
-  if (container_exec == "docker") {
+  if (config$backend == "docker") {
     volumes <- unlist(map(volumes, function(x) c("-v", x)))
-  } else if (container_exec == "singularity") {
+  } else if (config$backend == "singularity") {
     volumes <- c("-B", paste0(volumes, collapse = ","))
   }
 
@@ -49,9 +49,9 @@ run <- function(
 
   # process workspace
   if (!is.null(workspace)) {
-    if (container_exec == "docker") {
+    if (config$backend == "docker") {
       workspace <- c("--workdir", workspace)
-    } else if (container_exec == "singularity") {
+    } else if (config$backend == "singularity") {
       workspace <- c("--pwd", workspace)
     }
   }
@@ -63,7 +63,7 @@ run <- function(
   #################################
   #### CREATE DOCKER ARGUMENTS ####
   #################################
-  if (container_exec == "docker") {
+  if (config$backend == "docker") {
     # is entrypoint given
     if (!is.null(command)) {
       command <- c("--entrypoint", command)
@@ -80,13 +80,12 @@ run <- function(
 
     # determine command arguments
     processx_args <- c("run", command, env, workspace, volumes, container_id, args)
-  }
 
 
   ######################################
   #### CREATE SINGULARITY ARGUMENTS ####
   ######################################
-  if (container_exec == "singularity") {
+  } else if (config$backend == "singularity") {
     # create caches and tmpdirs
     tempcache <- create_concurrent_dir(dest_dir = config$cache_dir)
     on.exit(finalise_concurrent_dir(temp_dir = tempcache, dest_dir = config$cache_dir))
@@ -129,7 +128,7 @@ run <- function(
   if (!debug) {
     # run container
     process <- processx::run(
-      command = container_exec,
+      command = processx_command,
       args = processx_args,
       env = processx_env,
       echo = verbose,
@@ -148,7 +147,7 @@ run <- function(
     # simply print the command the user needs to use to enter the container
     env_str <- if (length(env) > 0) paste0(names(env), "=", env, collapse = " ") else NULL
 
-    command <- paste0(c(env_str, container_exec, args), collapse = " ")
+    command <- paste0(c(env_str, processx_command, args), collapse = " ")
 
     stop("Use this command for debugging: \n", crayon::bold(command), call. = FALSE)
   }
