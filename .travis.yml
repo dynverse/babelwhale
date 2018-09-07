@@ -1,0 +1,14 @@
+language: r
+dist: trusty
+os:
+  - linux
+  - osx
+warnings_are_errors: true
+cache: packages
+services: docker
+install:
+ - R -e 'if ("devtools" %in% rownames(installed.packages())) update.packages(oldPkgs = "devtools", ask = FALSE) else install.packages("devtools")'
+ - R -e 'devtools::install_cran("covr")'
+ - R -e 'devtools::install(dependencies = TRUE, upgrade = TRUE)'
+after_success:
+ - R -e 'covr::codecov()'

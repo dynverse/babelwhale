@@ -1,0 +1,11 @@
+Package: babelwhale
+Version: 0.0.0.9000
+Title: Talking to Docker and Singularity containers
+Description: Talking to Docker and Singularity containers.
+Authors@R: c(
+  person("Robrecht", "Cannoodt", email = "rcannood@gmail.com", role = c("aut")),
+  person("Wouter", "Saelens", email = "wouter.saelens@ugent.be", role = c("aut", "cre")))
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+ByteCompile: true
