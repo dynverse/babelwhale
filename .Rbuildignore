@@ -1,2 +1,8 @@
-^babelwhale\.Rproj$
+^.*\.Rproj$
 ^\.Rproj\.user$
+^\.travis
+^\.git$
+^_pkgdown\.yml$
+^data-raw$
+^docs$
+^appveyor\.yml$

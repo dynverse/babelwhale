@@ -1,1 +1,9 @@
 .Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+*.so
+*.o
+inst/doc
+.DS_Store
+*.simg
