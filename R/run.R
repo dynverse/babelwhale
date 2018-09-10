@@ -145,9 +145,9 @@ run <- function(
     process
   } else {
     # simply print the command the user needs to use to enter the container
-    env_str <- if (length(env) > 0) paste0(names(env), "=", env, collapse = " ") else NULL
+    processx_env <- if (length(processx_env) > 0) paste0(names(processx_env), "=", processx_env, collapse = " ") else NULL
 
-    command <- paste0(c(env_str, processx_command, args), collapse = " ")
+    command <- paste0(c(processx_env, processx_command, processx_args), collapse = " ")
 
     stop("Use this command for debugging: \n", crayon::bold(command), call. = FALSE)
   }
