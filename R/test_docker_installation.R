@@ -68,7 +68,7 @@ test_docker_installation <- function(detailed = FALSE) {
     message(crayon::green(glue::glue("\u2714 Docker is in linux mode")))
 
     # test if docker images can be pulled
-    output <- processx::run("docker", c("pull", "alpine:3.7"), error_on_status = FALSE, stderr_callback = print_processx)
+    output <- processx::run("docker", c("pull", "alpine:3.7"), error_on_status = FALSE, stderr_callback = print_processx, spinner = TRUE)
     if (output$status != 0) {
       stop(crayon::red("\u274C Unable to pull docker images."))
     }
