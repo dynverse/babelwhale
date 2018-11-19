@@ -138,8 +138,7 @@ run <- function(
     )
 
     if (process$status != 0 && !verbose) {
-      cat(process$stderr)
-      stop(call. = FALSE)
+      stop(process$stderr, call. = FALSE)
     }
 
     process
