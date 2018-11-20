@@ -31,7 +31,7 @@ convert_dockerfile_to_singularityrecipe <- function(
     str_replace_all("# .*", "") %>%
     discard(function(x) grepl("^ *$", x)) %>%
     paste(collapse = "\n") %>%
-    str_replace_all(" *\\\\\n *", " °") %>%
+    str_replace_all(" *\\\\\n *", " <PLCHLDR>") %>%
     strsplit("\n") %>%
     first()
 
@@ -48,7 +48,7 @@ convert_dockerfile_to_singularityrecipe <- function(
 
   test_json <- function(x) {
     if (grepl("^\\[", x)) {
-      jsonlite::fromJSON(x) %>% paste(collapse = " ")
+      x %>% str_replace_all("<PLCHLDR>", "") %>% jsonlite::fromJSON() %>% paste(collapse = " ")
     } else {
       x
     }
@@ -96,7 +96,7 @@ convert_dockerfile_to_singularityrecipe <- function(
     post,
     runscript
   ) %>%
-    str_replace_all("°", "\\\\\n      ")
+    str_replace_all("<PLCHLDR>", "\\\\\n      ")
 
   # write to file
   readr::write_lines(output, singularityrecipe)
