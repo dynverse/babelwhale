@@ -37,7 +37,10 @@ convert_dockerfile_to_singularityrecipe <- function(
 
   # parse earch section
   from <- str_subset(lines, "^FROM ") %>% str_replace_all("FROM ", "From: ")
-  environment <- str_subset(lines, "^ENV ") %>% str_replace_all("ENV ", "    export ") %>% add_header("%environment")
+  environment <- str_subset(lines, "^ENV ") %>%
+    str_replace_all("ENV ", "    export ") %>%
+    str_replace_all("export ([a-zA-Z0-9_]*) *", "export \\1=") %>%
+    add_header("%environment")
   labels <- str_subset(lines, "^LABEL ") %>% str_replace_all("LABEL ", "    ") %>% add_header("%labels")
   add_files <- str_subset(lines, "^ADD ") %>% str_replace_all("ADD ", "    ")
   copy_files <- str_subset(lines, "^COPY ") %>% str_replace_all("COPY ", "    ")
