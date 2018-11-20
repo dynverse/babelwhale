@@ -45,7 +45,19 @@ convert_dockerfile_to_singularityrecipe <- function(
   add_files <- str_subset(lines, "^ADD ") %>% str_replace_all("ADD ", "    ")
   copy_files <- str_subset(lines, "^COPY ") %>% str_replace_all("COPY ", "    ")
   files <- c(add_files, copy_files) %>% add_header("%files")
-  runscript <- str_subset(lines, "^ENTRYPOINT ") %>% str_replace_all("ENTRYPOINT ", "    exec ") %>% add_header("%runscript")
+
+  test_json <- function(x) {
+    if (grepl("^\\[", x)) {
+      jsonlite::fromJSON(x) %>% paste(collapse = " ")
+    } else {
+      x
+    }
+  }
+  runscript <- str_subset(lines, "^ENTRYPOINT ") %>%
+    str_replace_all("ENTRYPOINT *", "") %>%
+    test_json() %>%
+    str_replace_all("^", "    exec ") %>%
+    add_header("%runscript")
 
   # add commands for each mount because shub will otherwise the files are non-readable
   mounts <- files %>% str_subset("^[^%]") %>% str_replace_all(" *[^ ]* *([^ ]*) *", "\\1")
