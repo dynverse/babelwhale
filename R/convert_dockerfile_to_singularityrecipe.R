@@ -31,22 +31,41 @@ convert_dockerfile_to_singularityrecipe <- function(
     str_replace_all("# .*", "") %>%
     discard(function(x) grepl("^ *$", x)) %>%
     paste(collapse = "\n") %>%
-    str_replace_all(" *\\\\\n *", " <NEWLINEPLACEHOLDER>") %>%
+    str_replace_all(" *\\\\\n *", " <PLCHLDR>") %>%
     strsplit("\n") %>%
     first()
 
   # parse earch section
   from <- str_subset(lines, "^FROM ") %>% str_replace_all("FROM ", "From: ")
-  environment <- str_subset(lines, "^ENV ") %>% str_replace_all("ENV ", "    export ") %>% add_header("%environment")
+  environment <- str_subset(lines, "^ENV ") %>%
+    str_replace_all("ENV ", "    export ") %>%
+    str_replace_all("export ([a-zA-Z0-9_]*) *", "export \\1=") %>%
+    add_header("%environment")
   labels <- str_subset(lines, "^LABEL ") %>% str_replace_all("LABEL ", "    ") %>% add_header("%labels")
-  files <- str_subset(lines, "^ADD ") %>% str_replace_all("ADD ", "    ") %>% add_header("%files")
-  runscript <- str_subset(lines, "^ENTRYPOINT ") %>% str_replace_all("ENTRYPOINT ", "    exec ") %>% add_header("%runscript")
+  add_files <- str_subset(lines, "^ADD ") %>% str_replace_all("ADD ", "    ")
+  copy_files <- str_subset(lines, "^COPY ") %>% str_replace_all("COPY ", "    ")
+  files <- c(add_files, copy_files) %>% add_header("%files")
+
+  test_json <- function(x) {
+    if (grepl("^\\[", x)) {
+      x %>% str_replace_all("<PLCHLDR>", "") %>% jsonlite::fromJSON() %>% paste(collapse = " ")
+    } else {
+      x
+    }
+  }
+  runscript <- str_subset(lines, "^ENTRYPOINT ") %>%
+    str_replace_all("ENTRYPOINT *", "") %>%
+    test_json() %>%
+    str_replace_all("^", "    exec ") %>%
+    add_header("%runscript")
 
   # add commands for each mount because shub will otherwise the files are non-readable
   mounts <- files %>% str_subset("^[^%]") %>% str_replace_all(" *[^ ]* *([^ ]*) *", "\\1")
-  extra_commands <- paste0(
-    "    chmod -R 755 ", paste0("'", mounts, "'", collapse = " ")
-  )
+  if (length(mounts) > 0) {
+    extra_commands <- paste0(
+      "    chmod -R 755 ", paste0("'", mounts, "'", collapse = " ")
+    )
+  }
 
   # create post section
   post <- str_subset(lines, "^RUN ") %>% str_replace_all("RUN ", "    ") %>% c(extra_commands, .) %>% add_header("%post")
@@ -77,7 +96,7 @@ convert_dockerfile_to_singularityrecipe <- function(
     post,
     runscript
   ) %>%
-    str_replace_all("<NEWLINEPLACEHOLDER>", "\\\\\n      ")
+    str_replace_all("<PLCHLDR>", "\\\\\n      ")
 
   # write to file
   readr::write_lines(output, singularityrecipe)
