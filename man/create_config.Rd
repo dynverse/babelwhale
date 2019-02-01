@@ -19,8 +19,7 @@ create_docker_config()
 create_singularity_config(
   cache_dir =
     get_env_or_null("SINGULARITY_CACHEDIR") \%||\%
-    "./",
-  use_cache = cache_dir != "./"
+    "./"
 )
 
 get_default_config()
@@ -31,8 +30,6 @@ set_default_config(config, permanent = TRUE)
 \item{backend}{Which backend to use. Can be either \code{"docker"} or \code{"singularity"}.}
 
 \item{cache_dir}{A folder in which to store the singularity images. Each TI method will require about 1GB of space.}
-
-\item{use_cache}{If the singularity images are not cached, they will need to be downloaded every time a method is run.}
 
 \item{config}{A config to save as default.}
 

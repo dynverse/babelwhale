@@ -54,32 +54,21 @@ create_docker_config <- function() {
 }
 
 #' @param cache_dir A folder in which to store the singularity images. Each TI method will require about 1GB of space.
-#' @param use_cache If the singularity images are not cached, they will need to be downloaded every time a method is run.
 #'
 #' @usage
 #' create_singularity_config(
 #'   cache_dir =
 #'     get_env_or_null("SINGULARITY_CACHEDIR") \%||\%
-#'     "./",
-#'   use_cache = cache_dir != "./"
+#'     "./"
 #' )
 #'
 #' @rdname create_config
 #' @export
 create_singularity_config <- function(
-  cache_dir = get_env_or_null("SINGULARITY_CACHEDIR") %||% "./",
-  use_cache = cache_dir != "./"
+  cache_dir = get_env_or_null("SINGULARITY_CACHEDIR") %||% "./"
 ) {
-  if (use_cache && cache_dir == "./") {
-    warning(
-      "No singularity cache directory specified, will use the working directory.\n",
-      "Check `?create_singularity_config` for more information on how to define the cache directory."
-    )
-  }
-
   lst(
     backend = "singularity",
-    use_cache,
     cache_dir
   )
 }

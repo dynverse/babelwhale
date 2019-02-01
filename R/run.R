@@ -108,11 +108,11 @@ run <- function(
     )
 
     # pull container directly from shub or use a prebuilt image
-    if (!config$use_cache) {
-      container <- paste0("shub://", container_id)
-    } else {
-      container <- singularity_image_path(container_id)
+    container <- singularity_image_path(container_id)
+    if (!file.exists(container)) {
+      pull_container(container_id)
     }
+
 
     # determine command arguments
     processx_args <- c(

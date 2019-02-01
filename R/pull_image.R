@@ -12,10 +12,6 @@ pull_container <- function(container_id) {
     processx::run("docker", c("pull", container_id), echo = TRUE)
 
   } else if (config$backend == "singularity") {
-    if (!config$use_cache) {
-      warning("Cannot pull singularity container, as no cachedir is defined.\nSee ?create_singularity_config() for more information.")
-    }
-
     image_location <- singularity_image_path(container_id)
     image_folder <- dirname(image_location)
     image_file <- basename(image_location)
