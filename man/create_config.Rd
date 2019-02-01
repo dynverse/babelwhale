@@ -19,7 +19,7 @@ create_docker_config()
 create_singularity_config(
   cache_dir =
     get_env_or_null("SINGULARITY_CACHEDIR") \%||\%
-    "./"
+    ".singularity/"
 )
 
 get_default_config()
