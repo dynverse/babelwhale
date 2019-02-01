@@ -107,7 +107,7 @@ run <- function(
       "PATH" = Sys.getenv("PATH") # pass the path along
     )
 
-    # pull container directly from shub or use a prebuilt image
+    # pull container first if it does not exist
     container <- singularity_image_path(container_id)
     if (!file.exists(container)) {
       pull_container(container_id)

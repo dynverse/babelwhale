@@ -65,8 +65,9 @@ create_docker_config <- function() {
 #' @rdname create_config
 #' @export
 create_singularity_config <- function(
-  cache_dir = get_env_or_null("SINGULARITY_CACHEDIR") %||% "./"
+  cache_dir = get_env_or_null("SINGULARITY_CACHEDIR") %||% ".singularity/"
 ) {
+  dir.create(cache_dir, recursive = TRUE, showWarnings = FALSE)
   lst(
     backend = "singularity",
     cache_dir
