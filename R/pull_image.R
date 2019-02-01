@@ -25,8 +25,8 @@ pull_container <- function(container_id) {
     # pull container
     processx::run(
       command = "singularity",
-      args = c("pull", "--name", image_file, paste0("shub://", container_id)),
-      env = c("SINGULARITY_CACHEDIR" = tempcache),
+      args = c("pull",paste0("shub://", container_id)),
+      env = c("SINGULARITY_CACHEDIR" = tempcache, Sys.getenv()),
       wd = tempcache,
       echo = TRUE
     )
