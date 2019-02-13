@@ -8,10 +8,18 @@
 list_docker_images <- function(container_id = NULL) {
   columns <- c("ID", "Repository", "Tag", "Digest", "CreatedSince", "CreatedAt", "Size")
   format <- paste0("{{.", columns, "}}") %>% paste(collapse = "\t")
-  processx::run("docker", c("images", paste0("--format=", format), container_id), echo = FALSE) %>%
-    .$stdout %>%
+  stdout <- processx::run("docker", c("images", paste0("--format=", format), container_id), echo = FALSE) %>%
+    .$stdout
+
+  if (stdout != "") {
     readr::read_tsv(
+      stdout,
       col_names = columns,
       col_types = readr::cols(.default = "c")
     )
+  } else {
+    map(columns, ~ character(0)) %>%
+      set_names(columns) %>%
+      as_tibble()
+  }
 }
