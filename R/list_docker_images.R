@@ -1,0 +1,17 @@
+#' List docker containers
+#'
+#' @param container_id An optional container id
+#'
+#' @export
+#'
+#' @importFrom readr read_tsv cols
+list_docker_images <- function(container_id = NULL) {
+  columns <- c("ID", "Repository", "Tag", "Digest", "CreatedSince", "CreatedAt", "Size")
+  format <- paste0("{{.", columns, "}}") %>% paste(collapse = "\t")
+  processx::run("docker", c("images", paste0("--format=", format), container_id), echo = FALSE) %>%
+    .$stdout %>%
+    readr::read_tsv(
+      col_names = columns,
+      col_types = readr::cols(.default = "c")
+    )
+}
