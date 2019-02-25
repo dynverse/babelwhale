@@ -10,11 +10,10 @@ get_label <- function(container_id, label_name) {
   config <- get_default_config()
 
   if (config$backend == "docker") {
-    result <- processx::run("docker", c("inspect", "--type=image", container_id, paste0("--format='{{ index .Config.Labels \"", tolower(label_name), "\" }}'")), error_on_status = FALSE)
+    result <- processx::run("docker", c("inspect", "--type=image", container_id, paste0("--format='{{ index .Config.Labels \"", tolower(label_name), "\" }}'")), error_on_status = FALSE, echo = FALSE)
 
     # check whether image is available locally
     if (result$status > 0) {
-      warning(paste0(result$stdout, "\n", result$stderr))
       NA
     } else {
       result$stdout %>%
