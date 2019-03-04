@@ -29,7 +29,8 @@ test_singularity_installation <- function(detailed = FALSE) {
   }
 
   if (detailed) {
-    message(crayon::green(paste0("\u2714 Singularity ", gsub("\n", "", output$stdout), " is installed")))
+    message(crayon::green(paste0("\u2714 Singularity is installed")))
+    message(crayon::green(paste0("\u2714 Singularity is at correct version (>=3.0): ", gsub("\n", "", output$stdout), " is installed")))
   }
 
   output <- processx::run("singularity", c("exec", "docker://alpine:3.7", "echo", "hi"), error_on_status = FALSE, stderr_callback = print_processx, spinner = TRUE)
@@ -37,10 +38,10 @@ test_singularity_installation <- function(detailed = FALSE) {
     stop(crayon::red("\u274C Singularity is unable to run pull and run a container from Dockerhub."))
   }
   if (detailed) {
-    message(crayon::green("\u2714 Singularity can pull and run a container from Dockerhub installed"))
+    message(crayon::green("\u2714 Singularity can pull and run a container from Dockerhub"))
   }
 
-  # test if docker volume can be mounted
+  # test if singularity volume can be mounted
   tryCatch({
     volume_dir <- dynutils::safe_tempdir("test")
     on.exit(unlink(volume_dir, force = TRUE, recursive = TRUE))
