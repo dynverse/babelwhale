@@ -137,7 +137,7 @@ run <- function(
       error_on_status = FALSE
     )
 
-    if (process$status != 0 && !verbose) {
+    if (process$status != 0) {
       stop(process$stderr, call. = FALSE)
     }
 
