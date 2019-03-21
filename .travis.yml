@@ -6,6 +6,9 @@ os:
 warnings_are_errors: true
 cache: packages
 services: docker
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update          ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install libgit2; fi
 install:
  - R -e 'if ("devtools" %in% rownames(installed.packages())) update.packages(oldPkgs = "devtools", ask = FALSE) else install.packages("devtools")'
  - R -e 'devtools::install_cran("covr")'

@@ -2,7 +2,7 @@
 % Please edit documentation in R/pull_image.R
 \name{pull_container}
 \alias{pull_container}
-\title{Pull a container from dockerhub or singularityhub}
+\title{Pull a container from dockerhub}
 \usage{
 pull_container(container_id)
 }
@@ -10,5 +10,5 @@ pull_container(container_id)
 \item{container_id}{The name of the container, usually the repository name on dockerhub or singularityhub}
 }
 \description{
-Pull a container from dockerhub or singularityhub
+Pull a container from dockerhub
 }
