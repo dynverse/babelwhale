@@ -6,6 +6,7 @@
 #' @importFrom crayon red green bold
 #' @importFrom stringr str_pad
 #' @importFrom dynutils safe_tempdir
+#' @importFrom readr write_lines
 #'
 #' @export
 test_singularity_installation <- function(detailed = FALSE) {
@@ -45,7 +46,7 @@ test_singularity_installation <- function(detailed = FALSE) {
   tryCatch({
     volume_dir <- dynutils::safe_tempdir("test")
     on.exit(unlink(volume_dir, force = TRUE, recursive = TRUE))
-    write_lines("hello", paste0(volume_dir, "/test"))
+    readr::write_lines("hello", paste0(volume_dir, "/test"))
   }, error = function(e) {
     folder <- file.path(tempfile()) %>% dynutils:::fix_macosx_tmp()
     stop(crayon::red(paste0("\u274C Unable to create temporary folder: ", folder, ".")))
