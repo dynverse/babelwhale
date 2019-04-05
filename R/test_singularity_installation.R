@@ -6,6 +6,7 @@
 #' @importFrom crayon red green bold
 #' @importFrom stringr str_pad
 #' @importFrom dynutils safe_tempdir
+#' @importFrom readr write_lines
 #'
 #' @export
 test_singularity_installation <- function(detailed = FALSE) {
@@ -33,7 +34,7 @@ test_singularity_installation <- function(detailed = FALSE) {
     message(crayon::green(paste0("\u2714 Singularity is at correct version (>=3.0): ", gsub("\n", "", output$stdout), " is installed")))
   }
 
-  output <- processx::run("singularity", c("exec", "docker://alpine:3.7", "echo", "hi"), error_on_status = FALSE, stderr_callback = print_processx, spinner = TRUE)
+  output <- processx::run("singularity", c("exec", "docker://alpine:3.7", "echo", "hi"), error_on_status = FALSE, stderr_callback = print_processx, spinner = TRUE, echo = FALSE)
   if (output$status != 0 || output$stdout != "hi\n") {
     stop(crayon::red("\u274C Singularity is unable to run pull and run a container from Dockerhub."))
   }
@@ -45,7 +46,7 @@ test_singularity_installation <- function(detailed = FALSE) {
   tryCatch({
     volume_dir <- dynutils::safe_tempdir("test")
     on.exit(unlink(volume_dir, force = TRUE, recursive = TRUE))
-    write_lines("hello", paste0(volume_dir, "/test"))
+    readr::write_lines("hello", paste0(volume_dir, "/test"))
   }, error = function(e) {
     folder <- file.path(tempfile()) %>% dynutils:::fix_macosx_tmp()
     stop(crayon::red(paste0("\u274C Unable to create temporary folder: ", folder, ".")))
