@@ -86,13 +86,7 @@ run <- function(
   #### CREATE SINGULARITY ARGUMENTS ####
   ######################################
   } else if (config$backend == "singularity") {
-    # create caches and tmpdirs
-    tempcache <- create_concurrent_dir(dest_dir = config$cache_dir)
-    on.exit(finalise_concurrent_dir(temp_dir = tempcache, dest_dir = config$cache_dir))
-
-    localcache <- dynutils::safe_tempdir("singularity_localcachedir")
-    on.exit(unlink(localcache, force = TRUE, recursive = TRUE))
-
+    # create tmpdir
     tmpdir <- dynutils::safe_tempdir("singularity_tmpdir")
     on.exit(unlink(tmpdir, force = TRUE, recursive = TRUE))
 
@@ -101,18 +95,11 @@ run <- function(
         environment_variables %>% str_replace_all("^.*=", ""),
         environment_variables %>% str_replace_all("^(.*)=.*$", "SINGULARITYENV_\\1")
       ),
-      "SINGULARITY_CACHEDIR" = tempcache,
-      "SINGULARITY_LOCALCACHEDIR" = localcache,
       "SINGULARITY_TMPDIR" = tmpdir,
       "PATH" = Sys.getenv("PATH") # pass the path along
     )
 
-    # pull container first if it does not exist
-    container <- singularity_image_path(container_id)
-    if (!file.exists(container)) {
-      pull_container(container_id)
-    }
-
+    container <- paste0("docker://", container_id)
 
     # determine command arguments
     processx_args <- c(
