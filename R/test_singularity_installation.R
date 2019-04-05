@@ -33,7 +33,7 @@ test_singularity_installation <- function(detailed = FALSE) {
     message(crayon::green(paste0("\u2714 Singularity is at correct version (>=3.0): ", gsub("\n", "", output$stdout), " is installed")))
   }
 
-  output <- processx::run("singularity", c("exec", "docker://alpine:3.7", "echo", "hi"), error_on_status = FALSE, stderr_callback = print_processx, spinner = TRUE)
+  output <- processx::run("singularity", c("exec", "docker://alpine:3.7", "echo", "hi"), error_on_status = FALSE, stderr_callback = print_processx, spinner = TRUE, echo = FALSE)
   if (output$status != 0 || output$stdout != "hi\n") {
     stop(crayon::red("\u274C Singularity is unable to run pull and run a container from Dockerhub."))
   }
