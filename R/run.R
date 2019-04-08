@@ -135,6 +135,6 @@ run <- function(
 
     command <- paste0(c(processx_env, processx_command, processx_args), collapse = " ")
 
-    stop("Use this command for debugging: \n", crayon::bold(command), call. = FALSE)
+    message("Use this command to enter the container: \n", crayon::bold(command))
   }
 }
