@@ -134,7 +134,6 @@ run <- function(
     processx_env <- if (length(processx_env) > 0) paste0(names(processx_env), "=", processx_env, collapse = " ") else NULL
 
     command <- paste0(c(processx_env, processx_command, processx_args), collapse = " ")
-
     message("Use this command to enter the container: \n", crayon::bold(command))
   }
 }
