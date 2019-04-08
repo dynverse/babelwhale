@@ -112,28 +112,28 @@ run <- function(
   #########################
   #### EXECUTE COMMAND ####
   #########################
-  if (!debug) {
-    # run container
-    process <- processx::run(
-      command = processx_command,
-      args = processx_args,
-      env = processx_env,
-      echo = verbose,
-      echo_cmd = verbose,
-      spinner = TRUE,
-      error_on_status = FALSE
-    )
-
-    if (process$status != 0) {
-      stop(process$stderr, call. = FALSE)
-    }
-
-    process
-  } else {
-    # simply print the command the user needs to use to enter the container
-    processx_env <- if (length(processx_env) > 0) paste0(names(processx_env), "=", processx_env, collapse = " ") else NULL
-
-    command <- paste0(c(processx_env, processx_command, processx_args), collapse = " ")
+  if (debug) {
+    processx_env_str <- if (length(processx_env) > 0) paste0(names(processx_env), "=", processx_env, collapse = " ") else NULL
+    command <- paste0(c(processx_env_str, processx_command, processx_args), collapse = " ")
     message("Use this command to enter the container: \n", crayon::bold(command))
+
+    processx_args <- processx_args[processx_args != "-it"]
   }
+
+  # run container
+  process <- processx::run(
+    command = processx_command,
+    args = processx_args,
+    env = processx_env,
+    echo = verbose,
+    echo_cmd = verbose,
+    spinner = TRUE,
+    error_on_status = FALSE
+  )
+
+  if (process$status != 0) {
+    stop(process$stderr, call. = FALSE)
+  }
+
+  process
 }
