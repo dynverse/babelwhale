@@ -117,6 +117,7 @@ run <- function(
     # determine command arguments
     processx_args <- c(
       ifelse(is.null(command), "run", "exec"),
+      "--no-home",
       workspace, volumes, container, command, args
     )
   }
