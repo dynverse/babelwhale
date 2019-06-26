@@ -132,6 +132,11 @@ run <- function(
     error_on_status = FALSE
   )
 
+  # capture out of memory
+  if (process$status == 137) {
+    process$stderr <- paste0(process$stderr, "Process ran out of memory (error code 137)")
+  }
+
   if (process$status != 0) {
     stop(process$stderr, call. = FALSE)
   }
