@@ -74,7 +74,6 @@ run <- function(
 
     # give it a name
     name <- paste0(sample(letters, 20), collapse = "")
-    name <- "test"
 
     command <- c(command, "--name", name)
 
