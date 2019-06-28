@@ -12,3 +12,11 @@ test_docker_installation(detailed = FALSE)
 \description{
 Tests whether docker is correctly installed and available
 }
+\examples{
+test_docker_installation()
+
+if (test_docker_installation()) {
+  test_docker_installation(detailed = TRUE)
+}
+
+}

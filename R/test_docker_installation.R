@@ -7,6 +7,13 @@
 #' @importFrom stringr str_pad
 #' @importFrom dynutils safe_tempdir
 #'
+#' @examples
+#' test_docker_installation()
+#'
+#' if (test_docker_installation()) {
+#'   test_docker_installation(detailed = TRUE)
+#' }
+#'
 #' @export
 test_docker_installation <- function(detailed = FALSE) {
   if (!detailed) {
