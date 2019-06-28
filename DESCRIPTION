@@ -1,7 +1,8 @@
 Package: babelwhale
 Version: 0.9.9.9000
-Title: Talking to Docker and Singularity containers
-Description: Talking to Docker and Singularity containers.
+Title: Talking to Docker and Singularity Containers
+Description: Provides a unified interface where possible to interact with docker and singularity containers.
+   You can execute a command inside a container, mount a volume or copy a file.
 Authors@R: c(
     person(
       "Robrecht", 
@@ -33,7 +34,7 @@ Imports:
   stringr,
   utils
 Remotes: 
-    dynverse/dynutils@devel
+  dynverse/dynutils@devel
 SystemRequirements: Docker and/or Singularity (>=3.0)
 Encoding: UTF-8
 LazyData: true
@@ -41,4 +42,4 @@ ByteCompile: true
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 Suggests: 
-    testthat
+  testthat

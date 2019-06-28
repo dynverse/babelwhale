@@ -3,7 +3,7 @@ configs <- list(
   singularity = create_singularity_config()
 )
 
-config <- configs[[1]]
+config <- configs[[2]]
 
 for (config in configs) {
   context(paste0("Testing ", config$backend))
@@ -18,10 +18,10 @@ for (config in configs) {
 
   test_that(paste0("babelwhale can copy and read a file from ", config$backend), {
     dest <- tempfile()
-    copy_file("alpine", "/etc/hosts", dest)
+    copy_file("alpine", "/etc/inittab", dest)
     expect_true(file.exists(dest))
 
-    hosts <- read_file("alpine", "/etc/hosts")
-    expect_equal(hosts[1], "127.0.0.1\tlocalhost")
+    hosts <- read_file("alpine", "/etc/inittab")
+    expect_equal(hosts[1], "# /etc/inittab")
   })
 }

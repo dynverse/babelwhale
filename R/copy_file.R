@@ -22,8 +22,8 @@ copy_file <- function(
   config <- get_default_config()
 
   if (config$backend == "docker") {
-    copyto <- paste0("/copyto/", basename(path_local))
-    run(container_id, "cp", c(path_container, copyto), volumes = paste0(dirname(path_local), ":", dirname(copyto)))
+    copy_mount <- paste0("/copy_mount/", basename(path_local))
+    run(container_id, "cp", c(path_container, copy_mount), volumes = paste0(dirname(path_local), ":", dirname(copy_mount)))
 
     invisible()
   } else if (config$backend == "singularity") {
@@ -33,8 +33,9 @@ copy_file <- function(
     run(
       container_id = container_id,
       command = "cp",
-      args = c(path_container, "/copy_mount"),
-      volumes = paste0(temp_folder, ":/copy_mount")
+      args = c(path_container, "/copy_mount/"),
+      volumes = paste0(temp_folder, ":/copy_mount"),
+      verbose = T
     )
 
     file.copy(file.path(temp_folder, basename(path_container)), path_local)
