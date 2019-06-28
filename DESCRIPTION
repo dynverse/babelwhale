@@ -35,6 +35,8 @@ Imports:
   readr,
   stringr,
   utils
+Remotes:
+  dynverse/dynutils@master
 SystemRequirements: Docker and/or Singularity (>=3.0)
 Encoding: UTF-8
 LazyData: true
