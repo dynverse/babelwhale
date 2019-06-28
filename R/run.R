@@ -66,13 +66,18 @@ run <- function(
   if (config$backend == "docker") {
     # is entrypoint given
     if (!is.null(command)) {
-      command <- c("--entrypoint", command)
+      command <- c("--entrypoint", command, "--rm")
       if (debug) {
         command <- c(command, "-it")
       }
     }
 
-    # add -e fllags to each environment variable
+    # give it a name
+    name <- paste0(sample(letters, 20), collapse = "")
+
+    command <- c(command, "--name", name)
+
+    # add -e flags to each environment variable
     env <- unlist(map(environment_variables, function(x) c("-e", x)))
 
     # do not pass env directly to processx
@@ -121,6 +126,13 @@ run <- function(
     processx_args <- processx_args[processx_args != "-it"]
   }
 
+  # stop container when interrupted
+  # stopping a docker process won't kill the container (you can test this by sending signal 9 to a docker process)
+  # so we need to do it manually
+  if (config$backend == "docker") {
+    on.exit({processx::run("docker", c("kill", name))})
+  }
+
   # run container
   process <- processx::run(
     command = processx_command,
@@ -129,12 +141,18 @@ run <- function(
     echo = verbose,
     echo_cmd = verbose,
     spinner = TRUE,
-    error_on_status = FALSE
+    error_on_status = FALSE,
+    cleanup_tree = TRUE
   )
+
+  # reset the on exit
+  if (config$backend == "docker") {
+    on.exit({})
+  }
 
   # capture out of memory
   if (process$status == 137) {
-    process$stderr <- paste0(process$stderr, "Process ran out of memory (error code 137)")
+    process$stderr <- paste0(process$stderr, "Container was killed, possibly because it ran out of memory (error code 137)")
   }
 
   if (process$status != 0) {
