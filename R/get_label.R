@@ -3,6 +3,12 @@
 #' @inheritParams run
 #' @param label_name The name of the label to return
 #'
+#' @examples
+#' if (test_docker_installation()) {
+#'   set_default_config(create_docker_config(), permanent = FALSE)
+#'   get_label("alpine", "version")
+#' }
+#'
 #' @importFrom jsonlite fromJSON
 #'
 #' @export

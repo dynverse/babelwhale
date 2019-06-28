@@ -6,3 +6,4 @@
 ^data-raw$
 ^docs$
 ^appveyor\.yml$
+README.Rmd

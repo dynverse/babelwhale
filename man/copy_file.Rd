@@ -7,7 +7,7 @@
 copy_file(container_id, path_container, path_local)
 }
 \arguments{
-\item{container_id}{The name of the container, usually the repository name on dockerhub or singularityhub}
+\item{container_id}{The name of the container, usually the repository name on dockerhub.}
 
 \item{path_container}{The path of the file inside the container}
 
@@ -15,4 +15,10 @@ copy_file(container_id, path_container, path_local)
 }
 \description{
 Copy a file from a container to the host system
+}
+\examples{
+if (test_docker_installation()) {
+  set_default_config(create_docker_config(), permanent = FALSE)
+  copy_file("alpine", "/bin/date", tempfile())
+}
 }

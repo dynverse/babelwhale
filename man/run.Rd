@@ -9,22 +9,36 @@ run(container_id, command, args = NULL, volumes = NULL,
   verbose = FALSE)
 }
 \arguments{
-\item{container_id}{The name of the container, usually the repository name on dockerhub or singularityhub}
+\item{container_id}{The name of the container, usually the repository name on dockerhub.}
 
 \item{command}{Character scalar, the command to run.}
 
 \item{args}{Character vector, arguments to the command.}
 
-\item{volumes}{Which volumes to be mounted}
+\item{volumes}{Which volumes to be mounted. Format: a character vector, with each element containing the source path and container path concatenated with a ":". For example: \code{c("/source_folder:/container_folder")}.}
 
 \item{workspace}{Which working directory to run the command in.}
 
 \item{environment_variables}{A character vector of environment variables. Format: \code{c("ENVVAR=VALUE")}.}
 
-\item{debug}{If \code{TRUE}, a command will be printed for the user to execute.}
+\item{debug}{If \code{TRUE}, a command will be printed that the user can execute to enter the container.}
 
 \item{verbose}{Whether or not to print output}
 }
 \description{
 Run a containerised command, and wait until finished
+}
+\examples{
+if (test_docker_installation()) {
+  set_default_config(create_docker_config(), permanent = FALSE)
+
+  # running a command
+  run("alpine", "echo", c("hello"))
+
+  # mounting a folder
+  folder <- tempdir()
+  write("i'm a mounted file", paste0(folder, "/file.txt"))
+  run("alpine", "cat", c("/mounted_folder/file.txt"), volumes = paste0(folder, "/:/mounted_folder"))
+}
+
 }

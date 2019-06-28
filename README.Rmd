@@ -1,0 +1,22 @@
+---
+output:
+  github_document:
+    html_preview: false
+---
+
+# babelwhale: talk to docker and singularity from R
+
+[![Build Status](https://travis-ci.org/dynverse/babelwhale.svg?branch=master)](https://travis-ci.org/dynverse/babelwhale)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/babelwhale)](https://cran.r-project.org/package=babelwhale)
+[![Coverage Status](https://codecov.io/gh/dynverse/babelwhale/branch/master/graph/badge.svg)](https://codecov.io/gh/dynverse/babelwhale?branch=master)
+
+## Latest changes
+
+Check out `news(package = "dynutils")` or [NEWS.md](inst/NEWS.md) for a full list of changes.
+
+<!-- This section gets automatically generated from inst/NEWS.md, and also generates inst/NEWS -->
+
+```{r news, echo=FALSE, results="asis"}
+dynutils::update_news()
+cat(dynutils::recent_news())
+```

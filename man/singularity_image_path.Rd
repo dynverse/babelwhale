@@ -7,7 +7,7 @@
 singularity_image_path(container_id)
 }
 \arguments{
-\item{container_id}{The name of the container, usually the repository name on dockerhub or singularityhub}
+\item{container_id}{The name of the container, usually the repository name on dockerhub.}
 }
 \description{
 Determine the cached path of singularity images

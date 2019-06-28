@@ -53,7 +53,7 @@ create_docker_config <- function() {
   list(backend = "docker")
 }
 
-#' @param cache_dir A folder in which to store the singularity images. Each TI method will require about 1GB of space.
+#' @param cache_dir A folder in which to store the singularity images. A container typically requires 100MB to 2GB.
 #'
 #' @usage
 #' create_singularity_config(

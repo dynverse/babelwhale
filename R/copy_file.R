@@ -8,6 +8,12 @@
 #'
 #' @importFrom utils tail
 #' @importFrom dynutils safe_tempdir
+#'
+#' @examples
+#' if (test_docker_installation()) {
+#'   set_default_config(create_docker_config(), permanent = FALSE)
+#'   copy_file("alpine", "/bin/date", tempfile())
+#' }
 copy_file <- function(
   container_id,
   path_container,
@@ -16,23 +22,8 @@ copy_file <- function(
   config <- get_default_config()
 
   if (config$backend == "docker") {
-    # start container
-    output <- processx::run(
-      "docker",
-      c("create", "--entrypoint", "bash", container_id),
-      stderr_callback = print_processx
-    )
-    id <- trimws(utils::tail(output$stdout, 1))
-
-    # copy file from container
-    processx::run(
-      "docker",
-      c("cp", paste0(id, ":", path_container), path_local),
-      stderr_callback = print_processx
-    )
-
-    # remove container
-    processx::run("docker", c("rm", id), stderr_callback = print_processx)
+    copy_mount <- paste0("/copy_mount/", basename(path_local))
+    run(container_id, "cp", c(path_container, copy_mount), volumes = paste0(dirname(path_local), ":", dirname(copy_mount)))
 
     invisible()
   } else if (config$backend == "singularity") {
@@ -42,8 +33,9 @@ copy_file <- function(
     run(
       container_id = container_id,
       command = "cp",
-      args = c(path_container, "/copy_mount"),
-      volumes = paste0(temp_folder, ":/copy_mount")
+      args = c(path_container, "/copy_mount/"),
+      volumes = paste0(temp_folder, ":/copy_mount"),
+      verbose = T
     )
 
     file.copy(file.path(temp_folder, basename(path_container)), path_local)

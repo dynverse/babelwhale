@@ -12,3 +12,11 @@ test_singularity_installation(detailed = FALSE)
 \description{
 Tests whether singularity is correctly installed and available
 }
+\examples{
+test_singularity_installation()
+
+if (test_singularity_installation()) {
+  test_singularity_installation(detailed = TRUE)
+}
+
+}

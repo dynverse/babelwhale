@@ -4,7 +4,7 @@
 \name{babelwhale}
 \alias{babelwhale}
 \alias{babelwhale-package}
-\title{Talking to Docker and Singularity containers}
+\title{Talking to both Docker and Singularity containers from R}
 \description{
-Talking to Docker and Singularity containers
+Talking to both Docker and Singularity containers from R
 }

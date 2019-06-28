@@ -29,7 +29,7 @@ set_default_config(config, permanent = TRUE)
 \arguments{
 \item{backend}{Which backend to use. Can be either \code{"docker"} or \code{"singularity"}.}
 
-\item{cache_dir}{A folder in which to store the singularity images. Each TI method will require about 1GB of space.}
+\item{cache_dir}{A folder in which to store the singularity images. A container typically requires 100MB to 2GB.}
 
 \item{config}{A config to save as default.}
 
