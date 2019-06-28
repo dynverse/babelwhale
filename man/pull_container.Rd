@@ -7,8 +7,13 @@
 pull_container(container_id)
 }
 \arguments{
-\item{container_id}{The name of the container, usually the repository name on dockerhub or singularityhub}
+\item{container_id}{The name of the container, usually the repository name on dockerhub.}
 }
 \description{
 Pull a container from dockerhub
+}
+\examples{
+if (test_docker_installation()) {
+  pull_container("alpine")
+}
 }

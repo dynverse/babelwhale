@@ -4,6 +4,12 @@
 #'
 #' @export
 #'
+#' @examples
+#' if (test_docker_installation()) {
+#'   set_default_config(create_docker_config(), permanent = FALSE)
+#'   list_docker_images()
+#' }
+#'
 #' @importFrom readr read_tsv cols
 list_docker_images <- function(container_id = NULL) {
   columns <- c("ID", "Repository", "Tag", "Digest", "CreatedSince", "CreatedAt", "Size")

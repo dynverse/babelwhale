@@ -1,12 +1,25 @@
 #' Run a containerised command, and wait until finished
 #'
-#' @param container_id The name of the container, usually the repository name on dockerhub or singularityhub
+#' @param container_id The name of the container, usually the repository name on dockerhub.
 #' @inheritParams processx::run
-#' @param volumes Which volumes to be mounted
+#' @param volumes Which volumes to be mounted. Format: a character vector, with each element containing the source path and container path concatenated with a ":". For example: `c("/source_folder:/container_folder")`.
 #' @param workspace Which working directory to run the command in.
 #' @param environment_variables A character vector of environment variables. Format: `c("ENVVAR=VALUE")`.
-#' @param debug If `TRUE`, a command will be printed for the user to execute.
+#' @param debug If `TRUE`, a command will be printed that the user can execute to enter the container.
 #' @param verbose Whether or not to print output
+#'
+#' @examples
+#' if (test_docker_installation()) {
+#'   set_default_config(create_docker_config(), permanent = FALSE)
+#'
+#'   # running a command
+#'   run("alpine", "echo", c("hello"))
+#'
+#'   # mounting a folder
+#'   folder <- tempdir()
+#'   write("i'm a mounted file", paste0(folder, "/file.txt"))
+#'   run("alpine", "cat", c("/mounted_folder/file.txt"), volumes = paste0(folder, "/:/mounted_folder"))
+#' }
 #'
 #' @importFrom crayon bold
 #' @importFrom dynutils safe_tempdir

@@ -8,6 +8,12 @@
 #'
 #' @importFrom utils tail
 #' @importFrom dynutils safe_tempdir
+#'
+#' @examples
+#' if (test_docker_installation()) {
+#'   set_default_config(create_docker_config(), permanent = FALSE)
+#'   copy_file("alpine", "/bin/date", tempfile())
+#' }
 copy_file <- function(
   container_id,
   path_container,

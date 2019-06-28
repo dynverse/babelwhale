@@ -7,10 +7,17 @@
 read_file(container_id, path_container)
 }
 \arguments{
-\item{container_id}{The name of the container, usually the repository name on dockerhub or singularityhub}
+\item{container_id}{The name of the container, usually the repository name on dockerhub.}
 
 \item{path_container}{The path of the file inside the container}
 }
 \description{
 Read a file from a container
+}
+\examples{
+if (test_docker_installation()) {
+  set_default_config(create_docker_config(), permanent = FALSE)
+  read_file("alpine", "/etc/hosts")
+}
+
 }

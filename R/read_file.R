@@ -2,6 +2,12 @@
 #'
 #' @inheritParams copy_file
 #'
+#' @examples
+#' if (test_docker_installation()) {
+#'   set_default_config(create_docker_config(), permanent = FALSE)
+#'   read_file("alpine", "/etc/hosts")
+#' }
+#'
 #' @importFrom readr read_lines
 #' @importFrom dynutils safe_tempdir
 #'

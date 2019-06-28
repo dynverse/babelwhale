@@ -7,10 +7,17 @@
 get_label(container_id, label_name)
 }
 \arguments{
-\item{container_id}{The name of the container, usually the repository name on dockerhub or singularityhub}
+\item{container_id}{The name of the container, usually the repository name on dockerhub.}
 
 \item{label_name}{The name of the label to return}
 }
 \description{
 Inspect a container and return a label
+}
+\examples{
+if (test_docker_installation()) {
+  set_default_config(create_docker_config(), permanent = FALSE)
+  get_label("alpine", "version")
+}
+
 }
