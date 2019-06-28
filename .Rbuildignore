@@ -7,3 +7,4 @@
 ^docs$
 ^appveyor\.yml$
 README.Rmd
+cran-comments.md
