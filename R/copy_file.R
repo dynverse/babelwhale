@@ -22,23 +22,8 @@ copy_file <- function(
   config <- get_default_config()
 
   if (config$backend == "docker") {
-    # start container
-    output <- processx::run(
-      "docker",
-      c("create", "--entrypoint", "bash", container_id),
-      stderr_callback = print_processx
-    )
-    id <- trimws(utils::tail(output$stdout, 1))
-
-    # copy file from container
-    processx::run(
-      "docker",
-      c("cp", paste0(id, ":", path_container), path_local),
-      stderr_callback = print_processx
-    )
-
-    # remove container
-    processx::run("docker", c("rm", id), stderr_callback = print_processx)
+    copyto <- paste0("/copyto/", basename(path_local))
+    run(container_id, "cp", c(path_container, copyto), volumes = paste0(dirname(path_local), ":", dirname(copyto)))
 
     invisible()
   } else if (config$backend == "singularity") {
