@@ -3,6 +3,7 @@ dist: trusty
 os:
   - linux
   - osx
+  - windows
 warnings_are_errors: true
 cache: packages
 services: docker
