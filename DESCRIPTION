@@ -1,5 +1,5 @@
 Package: babelwhale
-Version: 0.0.0.9000
+Version: 0.9.9.9000
 Title: Talking to Docker and Singularity containers
 Description: Talking to Docker and Singularity containers.
 Authors@R: c(
