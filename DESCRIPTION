@@ -1,5 +1,5 @@
 Package: babelwhale
-Version: 0.9.9.9000
+Version: 1.0.0
 Title: Talking to Docker and Singularity Containers
 Description: Provides a unified interface where possible to interact with docker and singularity containers.
    You can execute a command inside a container, mount a volume or copy a file.
@@ -33,8 +33,6 @@ Imports:
   readr,
   stringr,
   utils
-Remotes: 
-  dynverse/dynutils@devel
 SystemRequirements: Docker and/or Singularity (>=3.0)
 Encoding: UTF-8
 LazyData: true
