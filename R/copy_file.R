@@ -22,6 +22,7 @@ copy_file <- function(
   config <- get_default_config()
 
   if (config$backend == "docker") {
+    print("hi")
     copy_mount <- paste0("/copy_mount/", basename(path_local))
     run(container_id, "cp", c(path_container, copy_mount), volumes = paste0(dirname(path_local), ":", dirname(copy_mount)))
 

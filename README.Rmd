@@ -10,6 +10,25 @@ output:
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/babelwhale)](https://cran.r-project.org/package=babelwhale)
 [![Coverage Status](https://codecov.io/gh/dynverse/babelwhale/branch/master/graph/badge.svg)](https://codecov.io/gh/dynverse/babelwhale?branch=master)
 
+Specify docker or singularity
+
+```{r}
+library(babelwhale)
+config <- create_docker_config()
+set_default_config(config)
+```
+
+Run a command in a container
+
+```{r}
+run("alpine", "echo", c("hello"))
+```
+
+Get a file from a container
+```{r}
+read_file("alpine", "/etc/alpine-release")
+```
+
 ## Latest changes
 
 Check out `news(package = "dynutils")` or [NEWS.md](inst/NEWS.md) for a full list of changes.

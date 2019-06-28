@@ -7,6 +7,40 @@ Status](https://travis-ci.org/dynverse/babelwhale.svg?branch=master)](https://tr
 [![Coverage
 Status](https://codecov.io/gh/dynverse/babelwhale/branch/master/graph/badge.svg)](https://codecov.io/gh/dynverse/babelwhale?branch=master)
 
+Specify docker or singularity
+
+``` r
+library(babelwhale)
+config <- create_docker_config()
+set_default_config(config)
+```
+
+Run a command in a container
+
+``` r
+run("alpine", "echo", c("hello"))
+```
+
+    ## $status
+    ## [1] 0
+    ## 
+    ## $stdout
+    ## [1] "hello\n"
+    ## 
+    ## $stderr
+    ## [1] ""
+    ## 
+    ## $timeout
+    ## [1] FALSE
+
+Get a file from a container
+
+``` r
+read_file("alpine", "/etc/alpine-release")
+```
+
+    ## [1] "3.10.0"
+
 ## Latest changes
 
 Check out `news(package = "dynutils")` or [NEWS.md](inst/NEWS.md) for a
