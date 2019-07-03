@@ -86,7 +86,8 @@ run <- function(
     }
 
     # give it a name
-    name <- paste0(sample(letters, 20), collapse = "")
+
+    name <- dynutils::random_time_string("container")
 
     command <- c(command, "--name", name)
 
