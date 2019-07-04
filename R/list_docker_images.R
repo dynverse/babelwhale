@@ -4,6 +4,7 @@
 #'
 #' @export
 #'
+#' @importFrom utils read.delim
 #' @examples
 #' if (test_docker_installation()) {
 #'   set_default_config(create_docker_config(), permanent = FALSE)
