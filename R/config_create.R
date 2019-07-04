@@ -28,7 +28,7 @@ detect_backend <- function() {
 #' set_default_config(config, permanent = FALSE)
 #'
 #' config <- create_singularity_config(
-#'   cache_dir = "~/babelwhale_singularity_images/"
+#'   cache_dir = tempdir()
 #' )
 #' set_default_config(config, permanent = FALSE)
 #'
