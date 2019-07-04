@@ -2,7 +2,6 @@
 #'
 #' @param detailed Whether top do a detailed check
 #'
-#' @importFrom glue glue
 #' @importFrom crayon red green bold
 #' @importFrom stringr str_pad
 #' @importFrom dynutils safe_tempdir
@@ -39,15 +38,18 @@ test_docker_installation <- function(detailed = FALSE) {
         "https://docs.docker.com/install/"
       )
 
-      stop(crayon::red(glue::glue("\u274C An installation of docker is necessary to run this method. See {installation_url} for instructions.")))
+      msg <- paste0(
+        "\u274C An installation of docker is necessary to run this method. See ", installation_url, " for instructions."
+      )
+      stop(crayon::red())
     }
 
     # test if docker daemon is running
     output <- processx::run("docker", c("version", "--format", "{{.Client.APIVersion}}"), error_on_status = FALSE, stderr_callback = print_processx)
     if (output$status != 0) {
-      stop(crayon::red(glue::glue(
+      stop(crayon::red(paste0(
         "\u274C Docker daemon does not seem to be running... \n",
-        "- Try running {crayon::bold('dockerd')} in the command line \n",
+        "- Try running ", crayon::bold('dockerd'), " in the command line \n",
         "- See https://docs.docker.com/config/daemon/"
       )))
     }
@@ -59,20 +61,20 @@ test_docker_installation <- function(detailed = FALSE) {
       stop(crayon::red("\u274C Docker API version is", version, ". Requires 1.0 or later"))
     }
 
-    message(crayon::green(glue::glue("\u2714 Docker is at correct version (>1.0): ", version)))
+    message(crayon::green(paste0("\u2714 Docker is at correct version (>1.0): ", version)))
 
     # test if docker format is linux
     output <- processx::run("docker", c("info", "--format", "{{.OSType}}"), error_on_status = FALSE, stderr_callback = print_processx)
     ostype <- output$stdout %>% trimws() %>% str_replace_all("'", "") # remove trailing ' (in windows)
 
     if (ostype != "linux") {
-      stop(crayon::red(glue::glue(
-        "\u274C Docker is not running in linux mode, but in {ostype} mode. \n",
+      stop(crayon::red(paste0(
+        "\u274C Docker is not running in linux mode, but in ", ostype, " mode. \n",
         " Please switch to linux containers: https://docs.docker.com/docker-for-windows/#switch-between-windows-and-linux-containers"
       )))
     }
 
-    message(crayon::green(glue::glue("\u2714 Docker is in linux mode")))
+    message(crayon::green("\u2714 Docker is in linux mode"))
 
     # test if docker images can be pulled
     output <- processx::run("docker", c("pull", "alpine:3.7"), error_on_status = FALSE, stderr_callback = print_processx, spinner = TRUE)
@@ -90,10 +92,10 @@ test_docker_installation <- function(detailed = FALSE) {
 
     # test if docker volume can be mounted
     volume_dir <- dynutils::safe_tempdir("")
-    output <- processx::run("docker", c("run", "-v", glue::glue("{volume_dir}:/mount"), "alpine:3.7"), error_on_status = FALSE, stderr_callback = print_processx)
+    output <- processx::run("docker", c("run", "-v", paste0(volume_dir, ":/mount"), "alpine:3.7"), error_on_status = FALSE, stderr_callback = print_processx)
     if (output$status != 0) {
-      stop(crayon::red(glue::glue(
-        "\u274C Unable to mount temporary directory: {volume_dir}. \n",
+      stop(crayon::red(paste0(
+        "\u274C Unable to mount temporary directory: ", volume_dir, ". \n",
         "\tOn windows, you need to enable the shared drives (https://rominirani.com/docker-on-windows-mounting-host-directories-d96f3f056a2c)"
       )))
     }

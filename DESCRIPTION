@@ -26,7 +26,6 @@ Imports:
   crayon,
   dplyr,
   dynutils,
-  glue,
   jsonlite,
   processx,
   purrr,

@@ -2,7 +2,6 @@
 #'
 #' @param detailed Whether top do a detailed check
 #'
-#' @importFrom glue glue
 #' @importFrom crayon red green bold
 #' @importFrom stringr str_pad
 #' @importFrom dynutils safe_tempdir
@@ -63,7 +62,7 @@ test_singularity_installation <- function(detailed = FALSE) {
       stop(crayon::red(paste0("\u274C Unable to create temporary folder: ", folder, ".")))
     })
 
-    output <- processx::run("singularity", c("exec", "-B", glue::glue("{volume_dir}:/mount"), "docker://alpine:3.7", "cat", "/mount/test"), error_on_status = FALSE, stderr_callback = print_processx)
+    output <- processx::run("singularity", c("exec", "-B", paste0(volume_dir, ":/mount"), "docker://alpine:3.7", "cat", "/mount/test"), error_on_status = FALSE, stderr_callback = print_processx)
     if (output$status != 0 || output$stdout != "hello\n") {
       stop(crayon::red(paste0("\u274C Unable to mount temporary directory: ", volume_dir, ".")))
     }

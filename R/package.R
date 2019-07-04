@@ -2,7 +2,6 @@
 #'
 #' @import dplyr
 #' @import purrr
-#' @importFrom glue glue
 #' @importFrom processx run
 #'
 #' @docType package
