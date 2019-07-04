@@ -1,7 +1,7 @@
 Package: babelwhale
-Version: 1.0.0.9000
-Title: Talking to Docker and Singularity Containers
-Description: Provides a unified interface where possible to interact with docker and singularity containers.
+Version: 1.0.0
+Title: Talking to 'Docker' and 'Singularity' Containers
+Description: Provides a unified interface to interact with 'docker' and 'singularity' containers.
    You can execute a command inside a container, mount a volume or copy a file.
 Authors@R: c(
     person(
@@ -19,6 +19,8 @@ Authors@R: c(
       comment = c(ORCID = "0000-0002-7114-6248", github = "zouter")
     )
   )
+URL: https://github.com/dynverse/babelwhale
+BugReports: https://github.com/dynverse/babelwhale/issues
 License: GPL-3
 Depends:
   R (>= 3.0.0)
@@ -29,8 +31,8 @@ Imports:
   processx,
   purrr,
   utils
-Remotes: 
-  dynverse/dynutils@devel
+Remotes:
+  dynverse/dynutils@master
 SystemRequirements: Docker and/or Singularity (>=3.0)
 Encoding: UTF-8
 LazyData: true
