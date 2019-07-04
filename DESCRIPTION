@@ -28,7 +28,6 @@ Imports:
   dynutils,
   processx,
   purrr,
-  readr,
   stringr,
   utils
 Remotes: 
