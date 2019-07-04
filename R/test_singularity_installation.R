@@ -3,7 +3,6 @@
 #' @param detailed Whether top do a detailed check
 #'
 #' @importFrom crayon red green bold
-#' @importFrom stringr str_pad
 #' @importFrom dynutils safe_tempdir
 #'
 #' @examples
@@ -67,7 +66,7 @@ test_singularity_installation <- function(detailed = FALSE) {
     }
 
     message(crayon::green("\u2714 Singularity can mount temporary volumes"))
-    message(crayon::green(crayon::bold(stringr::str_pad("\u2714 Singularity test successful ", 90, side = "right", "-"))))
+    message(crayon::green(crayon::bold(pad("\u2714 Singularity test successful ", 90, side = "right", "-"))))
 
     TRUE
   }

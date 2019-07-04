@@ -1,19 +1,17 @@
 #' Determine the cached path of singularity images
 #'
 #' @inheritParams run
-#'
-#' @importFrom stringr str_replace_all str_replace
 singularity_image_path <- function(container_id) {
   config <- get_default_config()
 
   path <-
     container_id %>%
-    stringr::str_replace_all("@sha256:", "_hash-") %>%
-    stringr::str_replace_all(":", "_tag-") %>%
+    gsub("@sha256:", "_hash-", .) %>%
+    gsub(":", "_tag-", .) %>%
     paste0(config$cache_dir, ., ".simg") %>%
     normalizePath(mustWork = FALSE)
 
-  dir.create(stringr::str_replace(path, "[^/]*.simg$", ""), recursive = TRUE, showWarnings = FALSE)
+  dir.create(gsub("[^/]*.simg$", "", path), recursive = TRUE, showWarnings = FALSE)
 
   path
 }

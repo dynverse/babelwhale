@@ -28,7 +28,6 @@ Imports:
   dynutils,
   processx,
   purrr,
-  stringr,
   utils
 Remotes: 
   dynverse/dynutils@devel
