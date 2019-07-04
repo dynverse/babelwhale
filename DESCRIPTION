@@ -28,12 +28,8 @@ Imports:
   crayon,
   dplyr,
   dynutils,
-  glue,
-  jsonlite,
   processx,
   purrr,
-  readr,
-  stringr,
   utils
 Remotes:
   dynverse/dynutils@master

@@ -86,7 +86,8 @@ run <- function(
     }
 
     # give it a name
-    name <- paste0(sample(letters, 20), collapse = "")
+
+    name <- dynutils::random_time_string("container")
 
     command <- c(command, "--name", name)
 
@@ -110,8 +111,8 @@ run <- function(
 
     processx_env <- c(
       set_names(
-        environment_variables %>% str_replace_all("^.*=", ""),
-        environment_variables %>% str_replace_all("^(.*)=.*$", "SINGULARITYENV_\\1")
+        environment_variables %>% gsub("^.*=", "", .),
+        environment_variables %>% gsub("^(.*)=.*$", "SINGULARITYENV_\\1", .)
       ),
       "SINGULARITY_TMPDIR" = tmpdir,
       "PATH" = Sys.getenv("PATH") # pass the path along

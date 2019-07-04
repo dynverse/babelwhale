@@ -2,11 +2,8 @@
 #'
 #' @param detailed Whether top do a detailed check
 #'
-#' @importFrom glue glue
 #' @importFrom crayon red green bold
-#' @importFrom stringr str_pad
 #' @importFrom dynutils safe_tempdir
-#' @importFrom readr write_lines
 #'
 #' @examples
 #' test_singularity_installation()
@@ -57,19 +54,19 @@ test_singularity_installation <- function(detailed = FALSE) {
     tryCatch({
       volume_dir <- dynutils::safe_tempdir("test")
       on.exit(unlink(volume_dir, force = TRUE, recursive = TRUE))
-      readr::write_lines("hello", paste0(volume_dir, "/test"))
+      writeLines("hello", paste0(volume_dir, "/test"))
     }, error = function(e) {
       folder <- file.path(tempfile()) %>% fix_macosx_tmp()
       stop(crayon::red(paste0("\u274C Unable to create temporary folder: ", folder, ".")))
     })
 
-    output <- processx::run("singularity", c("exec", "-B", glue::glue("{volume_dir}:/mount"), "docker://alpine:3.7", "cat", "/mount/test"), error_on_status = FALSE, stderr_callback = print_processx)
+    output <- processx::run("singularity", c("exec", "-B", paste0(volume_dir, ":/mount"), "docker://alpine:3.7", "cat", "/mount/test"), error_on_status = FALSE, stderr_callback = print_processx)
     if (output$status != 0 || output$stdout != "hello\n") {
       stop(crayon::red(paste0("\u274C Unable to mount temporary directory: ", volume_dir, ".")))
     }
 
     message(crayon::green("\u2714 Singularity can mount temporary volumes"))
-    message(crayon::green(crayon::bold(stringr::str_pad("\u2714 Singularity test successful ", 90, side = "right", "-"))))
+    message(crayon::green(crayon::bold(pad("\u2714 Singularity test successful ", 90, side = "right", "-"))))
 
     TRUE
   }

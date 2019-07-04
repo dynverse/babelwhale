@@ -8,7 +8,6 @@
 #'   read_file("alpine", "/etc/hosts")
 #' }
 #'
-#' @importFrom readr read_lines
 #' @importFrom dynutils safe_tempdir
 #'
 #' @export
@@ -26,6 +25,5 @@ read_file <- function(
     path_container = path_container,
     path_local = path_local
   )
-
-  readr::read_lines(path_local)
+  readLines(path_local)
 }

@@ -20,18 +20,16 @@ get_default_config <- function() {
 #' @param config A config to save as default.
 #' @param permanent Whether or not to save the config file permanently
 #'
-#' @importFrom readr write_rds
-#'
 #' @export
 set_default_config <- function(config, permanent = TRUE) {
   if (permanent) {
     config_file <- .default_config_file()
 
-    folder <- str_replace_all(config_file, "/[^/]*$", "")
+    folder <- gsub("/[^/]*$", "", config_file)
 
     if (!file.exists(folder)) dir.create(folder, recursive = TRUE)
 
-    readr::write_rds(config, path = config_file)
+    save(config, file = config_file, compress = "gz")
   } else {
     options(babelwhale_config = config)
   }
