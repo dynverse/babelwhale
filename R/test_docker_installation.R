@@ -55,7 +55,7 @@ test_docker_installation <- function(detailed = FALSE) {
     message(crayon::green("\u2714 Docker daemon is running"))
 
     # test if docker version is recent enough
-    version <- output$stdout %>% trimws() %>% str_replace_all("'", "") # remove trailing ' (in windows)
+    version <- output$stdout %>% trimws() %>% gsub("'", "", .) # remove trailing ' (in windows)
     if (utils::compareVersion("1.0", version) > 0) {
       stop(crayon::red("\u274C Docker API version is", version, ". Requires 1.0 or later"))
     }
@@ -64,7 +64,7 @@ test_docker_installation <- function(detailed = FALSE) {
 
     # test if docker format is linux
     output <- processx::run("docker", c("info", "--format", "{{.OSType}}"), error_on_status = FALSE, stderr_callback = print_processx)
-    ostype <- output$stdout %>% trimws() %>% str_replace_all("'", "") # remove trailing ' (in windows)
+    ostype <- output$stdout %>% trimws() %>% gsub("'", "", .) # remove trailing ' (in windows)
 
     if (ostype != "linux") {
       stop(crayon::red(paste0(

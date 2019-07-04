@@ -25,7 +25,7 @@ set_default_config <- function(config, permanent = TRUE) {
   if (permanent) {
     config_file <- .default_config_file()
 
-    folder <- str_replace_all(config_file, "/[^/]*$", "")
+    folder <- gsub("/[^/]*$", "", config_file)
 
     if (!file.exists(folder)) dir.create(folder, recursive = TRUE)
 

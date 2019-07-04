@@ -111,8 +111,8 @@ run <- function(
 
     processx_env <- c(
       set_names(
-        environment_variables %>% str_replace_all("^.*=", ""),
-        environment_variables %>% str_replace_all("^(.*)=.*$", "SINGULARITYENV_\\1")
+        environment_variables %>% gsub("^.*=", "", .),
+        environment_variables %>% gsub("^(.*)=.*$", "SINGULARITYENV_\\1", .)
       ),
       "SINGULARITY_TMPDIR" = tmpdir,
       "PATH" = Sys.getenv("PATH") # pass the path along

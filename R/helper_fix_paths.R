@@ -1,15 +1,15 @@
 fix_windows_path <- function(path) {
-  path <- str_replace_all(path, "\\\\", "/")
+  path <- gsub("\\\\", "/", path)
 
   start <-
-    str_replace_all(path, "^([a-zA-Z]):/.*", "/\\1") %>%
+    gsub("^([a-zA-Z]):/.*", "/\\1", path) %>%
     tolower
 
-  str_replace(path, "[^:/]:", start)
+  gsub("[^:/]:", start, path)
 }
 
 unfix_windows_path <- function(path) {
-  str_replace_all(path, "^/c/", "C:/")
+  gsub("^/c/", "C:/", path)
 }
 
 
