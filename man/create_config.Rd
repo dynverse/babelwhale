@@ -45,14 +45,12 @@ Each TI method will require about 1GB of space.
 Alternatively, you can create a config and save it using \code{set_default_config()}.
 }
 \examples{
-\dontrun{
 config <- create_docker_config()
-set_default_config(config)
+set_default_config(config, permanent = FALSE)
 
 config <- create_singularity_config(
   cache_dir = "~/babelwhale_singularity_images/"
 )
-set_default_config(config)
-}
+set_default_config(config, permanent = FALSE)
 
 }
