@@ -49,7 +49,8 @@ config <- create_docker_config()
 set_default_config(config, permanent = FALSE)
 
 config <- create_singularity_config(
-  cache_dir = "~/babelwhale_singularity_images/"
+  # ideally, this would be set to a non-temporary directory
+  cache_dir = tempdir()
 )
 set_default_config(config, permanent = FALSE)
 
