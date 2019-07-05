@@ -28,6 +28,7 @@ detect_backend <- function() {
 #' set_default_config(config, permanent = FALSE)
 #'
 #' config <- create_singularity_config(
+#'   # ideally, this would be set to a non-temporary directory
 #'   cache_dir = tempdir()
 #' )
 #' set_default_config(config, permanent = FALSE)
