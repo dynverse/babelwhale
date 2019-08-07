@@ -31,8 +31,8 @@ Imports:
   processx,
   purrr,
   utils
-Remotes:
-  dynverse/dynutils@devel
+Remotes: 
+    dynverse/dynutils@devel
 SystemRequirements: Docker and/or Singularity (>=3.0)
 Encoding: UTF-8
 LazyData: true
