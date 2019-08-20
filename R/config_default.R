@@ -29,7 +29,7 @@ set_default_config <- function(config, permanent = TRUE) {
 
     if (!file.exists(folder)) dir.create(folder, recursive = TRUE)
 
-    save(config, file = config_file, compress = "gz")
+    save(config, file = config_file, compress = "gzip")
   } else {
     options(babelwhale_config = config)
   }
