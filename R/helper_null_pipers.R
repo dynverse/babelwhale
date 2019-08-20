@@ -8,10 +8,9 @@ get_env_or_null <- function(x) {
   y
 }
 
-#' @importFrom readr read_rds
 read_rds_or_null <- function(file) {
   if (file.exists(file)) {
-    readr::read_rds(file)
+    readRDS(file)
   } else {
     NULL
   }

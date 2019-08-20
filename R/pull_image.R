@@ -2,8 +2,6 @@
 #'
 #' @inheritParams run
 #'
-#' @importFrom jsonlite write_json
-#'
 #' @examples
 #' if (test_docker_installation()) {
 #'   pull_container("alpine")
