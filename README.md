@@ -43,7 +43,7 @@ read_file("alpine", "/etc/alpine-release")
 
 ## Latest changes
 
-Check out `news(package = "dynutils")` or [NEWS.md](inst/NEWS.md) for a
+Check out `news(package = "dynutils")` or [NEWS.md](NEWS.md) for a
 full list of
 changes.
 
