@@ -1,6 +1,6 @@
 configs <- list(
   docker = create_docker_config(),
-  singularity = create_singularity_config()
+  singularity = create_singularity_config(cache_dir = tempdir())
 )
 
 config <- configs[[2]]
