@@ -1,10 +1,6 @@
-# babelwhale 1.0.0 (04-07-2019)
+# babelwhale 1.0.1
 
-* Release of babelwhale, a package to run docker and singularity containers from R.
-
-* \dontrun example was altered as to make it runnable.
-
-* Altered example so it does not create a file in the home directory.
+* Fix issue with permanent saving of config.
 
 ## Test environments
 * local Fedora 30 installation, R 3.6.0
