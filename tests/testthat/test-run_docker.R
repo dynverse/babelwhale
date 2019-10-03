@@ -1,9 +1,9 @@
 configs <- list(
   docker = create_docker_config(),
-  singularity = create_singularity_config()
+  singularity = create_singularity_config(cache_dir = tempdir())
 )
 
-config <- configs[[1]]
+config <- configs[[2]]
 
 for (config in configs) {
   context(paste0("Testing ", config$backend))
@@ -17,6 +17,9 @@ for (config in configs) {
   if (config$backend == "singularity") skip_on_travis()
 
   test_that(paste0("babelwhale can run a ", config$backend), {
+    # warm up
+    output <- run("alpine", "echo", "hello")
+
     output <- run("alpine", "echo", "hello")
     expect_equal(output$stdout, "hello\n")
     expect_equal(output$status, 0)

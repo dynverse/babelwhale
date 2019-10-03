@@ -6,9 +6,9 @@ output:
 
 # babelwhale: talk to docker and singularity from R
 
-[![Build Status](https://travis-ci.org/dynverse/babelwhale.svg?branch=master)](https://travis-ci.org/dynverse/babelwhale)
+`r badger::badge_travis("dynverse/babelwhale")`
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/babelwhale)](https://cran.r-project.org/package=babelwhale)
-[![Coverage Status](https://codecov.io/gh/dynverse/babelwhale/branch/master/graph/badge.svg)](https://codecov.io/gh/dynverse/babelwhale?branch=master)
+`r badger::badge_codecov("dynverse/babelwhale")`
 
 Specify docker or singularity
 

@@ -115,6 +115,7 @@ run <- function(
         environment_variables %>% gsub("^(.*)=.*$", "SINGULARITYENV_\\1", .)
       ),
       "SINGULARITY_TMPDIR" = tmpdir,
+      "SINGULARITY_CACHEDIR" = config$cache_dir,
       "PATH" = Sys.getenv("PATH") # pass the path along
     )
 
