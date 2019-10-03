@@ -1,11 +1,9 @@
 
 # babelwhale: talk to docker and singularity from R
 
-[![Build
-Status](https://travis-ci.org/dynverse/babelwhale.svg?branch=master)](https://travis-ci.org/dynverse/babelwhale)
+[![](https://travis-ci.org/dynverse/babelwhale.svg?branch=master)](https://travis-ci.org/dynverse/babelwhale)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/babelwhale)](https://cran.r-project.org/package=babelwhale)
-[![Coverage
-Status](https://codecov.io/gh/dynverse/babelwhale/branch/master/graph/badge.svg)](https://codecov.io/gh/dynverse/babelwhale?branch=master)
+[![](https://codecov.io/gh/dynverse/babelwhale/branch/master/graph/badge.svg)](https://codecov.io/gh/dynverse/babelwhale)
 
 Specify docker or singularity
 
@@ -39,17 +37,20 @@ Get a file from a container
 read_file("alpine", "/etc/alpine-release")
 ```
 
-    ## [1] "3.10.0"
+    ## [1] "3.10.2"
 
 ## Latest changes
 
-Check out `news(package = "dynutils")` or [NEWS.md](NEWS.md) for a
-full list of
-changes.
+Check out `news(package = "dynutils")` or [NEWS.md](NEWS.md) for a full
+list of changes.
 
-<!-- This section gets automatically generated from inst/NEWS.md, and also generates inst/NEWS -->
+<!-- This section gets automatically generated from NEWS.md -->
+
+### Recent changes in babelwhale 1.0.1
+
+  - Fix issue with permanent saving of config.
 
 ### Recent changes in babelwhale 1.0.0 (28-06-2019)
 
   - Release of babelwhale, a package to run docker and singularity
-    containers from R
+    containers from R.

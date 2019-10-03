@@ -1,5 +1,5 @@
 Package: babelwhale
-Version: 1.0.0
+Version: 1.0.1
 Title: Talking to 'Docker' and 'Singularity' Containers
 Description: Provides a unified interface to interact with 'docker' and 'singularity' containers.
    You can execute a command inside a container, mount a volume or copy a file.
