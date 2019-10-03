@@ -1,4 +1,4 @@
-# babelwhale 1.0.1 (20-08-2019)
+# babelwhale 1.0.1
 
 * Fix issue with permanent saving of config
 
