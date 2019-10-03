@@ -43,11 +43,14 @@ read_file("alpine", "/etc/alpine-release")
 
 ## Latest changes
 
-Check out `news(package = "dynutils")` or [NEWS.md](NEWS.md) for a
-full list of
-changes.
+Check out `news(package = "dynutils")` or [NEWS.md](NEWS.md) for a full
+list of changes.
 
-<!-- This section gets automatically generated from inst/NEWS.md, and also generates inst/NEWS -->
+<!-- This section gets automatically generated from NEWS.md -->
+
+### Recent changes in babelwhale 1.0.1
+
+  - Fix issue with permanent saving of config
 
 ### Recent changes in babelwhale 1.0.0 (28-06-2019)
 
