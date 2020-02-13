@@ -21,7 +21,7 @@ Authors@R: c(
   )
 URL: https://github.com/dynverse/babelwhale
 BugReports: https://github.com/dynverse/babelwhale/issues
-License: GPL-3
+License: MIT + LICENSE file
 Depends:
   R (>= 3.0.0)
 Imports:
