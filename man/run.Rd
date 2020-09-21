@@ -4,9 +4,16 @@
 \alias{run}
 \title{Run a containerised command, and wait until finished}
 \usage{
-run(container_id, command, args = NULL, volumes = NULL,
-  workspace = NULL, environment_variables = NULL, debug = FALSE,
-  verbose = FALSE)
+run(
+  container_id,
+  command,
+  args = NULL,
+  volumes = NULL,
+  workspace = NULL,
+  environment_variables = NULL,
+  debug = FALSE,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{container_id}{The name of the container, usually the repository name on dockerhub.}
