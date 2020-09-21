@@ -15,12 +15,16 @@
 #' @export
 test_docker_installation <- function(detailed = FALSE) {
   if (!detailed) {
-    output <- tryCatch(
-      processx::run("docker", "version", error_on_status = FALSE, stderr_callback = print_processx, timeout = 2),
-      error = function(e) {list(status = 1)}
-    )
 
-    output$status == 0
+    tryCatch({
+      out <- processx::run("docker", c("info", "--format", "{{.OSType}}"), error_on_status = FALSE, stderr_callback = print_processx, timeout = 2)
+      ostype <- out$stdout %>% trimws() %>% gsub("'", "", .) # remove trailing ' (in windows)
+
+      out$status == 0 && ostype == "linux"
+    },
+    error = function(e) {
+      FALSE
+    })
   } else {
     # test if docker command is found
     output <- tryCatch(
