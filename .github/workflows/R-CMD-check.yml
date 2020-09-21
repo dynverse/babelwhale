@@ -103,8 +103,8 @@ jobs:
 
       - name: Check
         env:
-          - GITHUB_ACTIONS_OS: {{ runner.os }}
-          - _R_CHECK_CRAN_INCOMING_REMOTE_: false
+          GA_OS: {{ runner.os }}
+          _R_CHECK_CRAN_INCOMING_REMOTE_: false
         run: rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), error_on = "warning", check_dir = "check")
         shell: Rscript {0}
 
