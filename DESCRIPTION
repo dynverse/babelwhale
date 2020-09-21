@@ -1,6 +1,6 @@
 Package: babelwhale
 Title: Talking to 'Docker' and 'Singularity' Containers
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: 
     c(person(given = "Robrecht",
              family = "Cannoodt",
