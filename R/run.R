@@ -7,6 +7,10 @@
 #' @param environment_variables A character vector of environment variables. Format: `c("ENVVAR=VALUE")`.
 #' @param debug If `TRUE`, a command will be printed that the user can execute to enter the container.
 #' @param verbose Whether or not to print output
+#' @param stdout What to do with standard output of the command. Default ("|") means to include it as an item in the results list.
+#' If it is a string other than "|" and "", then it is taken as a file name and the output is redirected to this file.
+#' @param stderr What to do with standard error of the command. Default ("|") means to include it as an item in the results list.
+#' If it is a string other than "|" and "", then it is taken as a file name and the output is redirected to this file.
 #'
 #' @examples
 #' if (test_docker_installation()) {
@@ -33,7 +37,9 @@ run <- function(
   workspace = NULL,
   environment_variables = NULL,
   debug = FALSE,
-  verbose = FALSE
+  verbose = FALSE,
+  stdout = "|",
+  stderr = "|"
 ) {
   config <- get_default_config()
 
@@ -157,7 +163,9 @@ run <- function(
     echo_cmd = verbose,
     spinner = TRUE,
     error_on_status = FALSE,
-    cleanup_tree = TRUE
+    cleanup_tree = TRUE,
+    stdout = stdout,
+    stderr = stderr
   )
 
   # reset the on exit

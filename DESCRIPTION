@@ -28,7 +28,7 @@ Imports:
   crayon,
   dplyr,
   dynutils,
-  processx,
+  processx (>= 3.5.0),
   purrr,
   utils
 Remotes: 
@@ -37,7 +37,7 @@ SystemRequirements: Docker and/or Singularity (>=3.0)
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 Suggests: 
   testthat
