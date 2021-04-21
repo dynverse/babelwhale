@@ -1,9 +1,12 @@
 
 # babelwhale: talk to docker and singularity from R
 
-[![](https://travis-ci.org/dynverse/babelwhale.svg?branch=master)](https://travis-ci.org/dynverse/babelwhale)
+<!-- badges: start -->
+
+[![R-CMD-check](https://github.com/dynverse/babelwhale/workflows/R-CMD-check/badge.svg)](https://github.com/dynverse/babelwhale/actions)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/babelwhale)](https://cran.r-project.org/package=babelwhale)
-[![](https://codecov.io/gh/dynverse/babelwhale/branch/master/graph/badge.svg)](https://codecov.io/gh/dynverse/babelwhale)
+[![Codecov](https://codecov.io/gh/dynverse/babelwhale/branch/master/graph/badge.svg)](https://codecov.io/gh/dynverse/babelwhale)
+<!-- badges: end -->
 
 Specify docker or singularity
 
@@ -26,7 +29,7 @@ run("alpine", "echo", c("hello"))
     ## [1] "hello\n"
     ## 
     ## $stderr
-    ## [1] ""
+    ## [1] "Unable to find image 'alpine:latest' locally\nlatest: Pulling from library/alpine\n540db60ca938: Already exists\nDigest: sha256:69e70a79f2d41ab5d637de98c1e0b055206ba40a8145e7bddb55ccc04e13cf8f\nStatus: Downloaded newer image for alpine:latest\n"
     ## 
     ## $timeout
     ## [1] FALSE
@@ -37,7 +40,7 @@ Get a file from a container
 read_file("alpine", "/etc/alpine-release")
 ```
 
-    ## [1] "3.10.0"
+    ## [1] "3.13.5"
 
 ## Latest changes
 
@@ -46,11 +49,12 @@ list of changes.
 
 <!-- This section gets automatically generated from NEWS.md -->
 
-### Recent changes in babelwhale 1.0.1
+### Recent changes in babelwhale 1.0.2
 
-  - Fix issue with permanent saving of config.
+-   BUG FIX `test_docker_installation()`: Use `docker info` to check
+    whether docker is available.
 
-### Recent changes in babelwhale 1.0.0 (28-06-2019)
+### Recent changes in babelwhale 1.0.1 (03-10-2019)
 
-  - Release of babelwhale, a package to run docker and singularity
-    containers from R.
+-   BUG FIX `set_config_default()`: Fixed refactoring error; use
+    `saveRDS` instead of `save`.
