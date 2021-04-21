@@ -4,12 +4,12 @@ Version: 1.0.2
 Authors@R: 
     c(person(given = "Robrecht",
              family = "Cannoodt",
-             role = "aut",
+             role = c("aut", "cre"),
              email = "rcannood@gmail.com",
              comment = c(ORCID = "0000-0003-3641-729X", github = "rcannood")),
       person(given = "Wouter",
              family = "Saelens",
-             role = c("aut", "cre"),
+             role = "aut",
              email = "wouter.saelens@gmail.com",
              comment = c(ORCID = "0000-0002-7114-6248", github = "zouter")))
 Description: Provides a unified interface to interact with
