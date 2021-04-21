@@ -1,29 +1,25 @@
 Package: babelwhale
-Version: 1.0.1
 Title: Talking to 'Docker' and 'Singularity' Containers
-Description: Provides a unified interface to interact with 'docker' and 'singularity' containers.
-   You can execute a command inside a container, mount a volume or copy a file.
-Authors@R: c(
-    person(
-      "Robrecht", 
-      "Cannoodt", 
-      email = "rcannood@gmail.com", 
-      role = c("aut"),
-      comment = c(ORCID = "0000-0003-3641-729X", github = "rcannood")
-    ),
-    person(
-      "Wouter", 
-      "Saelens", 
-      email = "wouter.saelens@gmail.com", 
-      role = c("aut", "cre"), 
-      comment = c(ORCID = "0000-0002-7114-6248", github = "zouter")
-    )
-  )
+Version: 1.0.2
+Authors@R: 
+    c(person(given = "Robrecht",
+             family = "Cannoodt",
+             role = "aut",
+             email = "rcannood@gmail.com",
+             comment = c(ORCID = "0000-0003-3641-729X", github = "rcannood")),
+      person(given = "Wouter",
+             family = "Saelens",
+             role = c("aut", "cre"),
+             email = "wouter.saelens@gmail.com",
+             comment = c(ORCID = "0000-0002-7114-6248", github = "zouter")))
+Description: Provides a unified interface to interact with
+    'docker' and 'singularity' containers.  You can execute a command
+    inside a container, mount a volume or copy a file.
+License: MIT + file LICENSE
 URL: https://github.com/dynverse/babelwhale
 BugReports: https://github.com/dynverse/babelwhale/issues
-License: GPL-3
 Depends:
-  R (>= 3.0.0)
+    R (>= 3.0.0)
 Imports:
   crayon,
   dplyr,
@@ -31,13 +27,9 @@ Imports:
   processx (>= 3.5.0),
   purrr,
   utils
-Remotes: 
-  dynverse/dynutils@master
 SystemRequirements: Docker and/or Singularity (>=3.0)
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
-RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
-Suggests: 
-  testthat
+RoxygenNote: 7.1.1
