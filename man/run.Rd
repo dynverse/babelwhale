@@ -34,11 +34,13 @@ run(
 
 \item{verbose}{Whether or not to print output}
 
-\item{stdout}{What to do with standard output of the command. Default ("|") means to include it as an item in the results list.
-If it is a string other than "|" and "", then it is taken as a file name and the output is redirected to this file.}
+\item{stdout}{What to do with standard output of the command. Default (\code{"|"}) means to include it as an item in the results list.
+If it is the empty string (\code{""}), then the child process inherits the standard output stream of the R process.
+If it is a string other than \code{"|"} and \code{""}, then it is taken as a file name and the output is redirected to this file.}
 
 \item{stderr}{What to do with standard error of the command. Default ("|") means to include it as an item in the results list.
-If it is a string other than "|" and "", then it is taken as a file name and the output is redirected to this file.}
+If it is the empty string (\code{""}), then the child process inherits the standard error stream of the R process.
+If it is a string other than \code{"|"} and \code{""}, then it is taken as a file name and the standard error is redirected to this file.}
 }
 \description{
 Run a containerised command, and wait until finished

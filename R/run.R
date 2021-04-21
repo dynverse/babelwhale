@@ -7,10 +7,12 @@
 #' @param environment_variables A character vector of environment variables. Format: `c("ENVVAR=VALUE")`.
 #' @param debug If `TRUE`, a command will be printed that the user can execute to enter the container.
 #' @param verbose Whether or not to print output
-#' @param stdout What to do with standard output of the command. Default ("|") means to include it as an item in the results list.
-#' If it is a string other than "|" and "", then it is taken as a file name and the output is redirected to this file.
+#' @param stdout What to do with standard output of the command. Default (`"|"`) means to include it as an item in the results list.
+#' If it is the empty string (`""`), then the child process inherits the standard output stream of the R process.
+#' If it is a string other than `"|"` and `""`, then it is taken as a file name and the output is redirected to this file.
 #' @param stderr What to do with standard error of the command. Default ("|") means to include it as an item in the results list.
-#' If it is a string other than "|" and "", then it is taken as a file name and the output is redirected to this file.
+#' If it is the empty string (`""`), then the child process inherits the standard error stream of the R process.
+#' If it is a string other than `"|"` and `""`, then it is taken as a file name and the standard error is redirected to this file.
 #'
 #' @examples
 #' if (test_docker_installation()) {
