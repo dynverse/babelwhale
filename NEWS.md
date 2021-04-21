@@ -2,6 +2,8 @@
 
 * BUG FIX `test_docker_installation()`: Use `docker info` to check whether docker is available.
 
+* BUG FIX: Redirect stdout and stderr to files to avoid processx hangs (#24, thanks @joelnitta!)
+
 # babelwhale 1.0.1 (03-10-2019)
 
 * BUG FIX `set_config_default()`: Fixed refactoring error; use `saveRDS` instead of `save`.
