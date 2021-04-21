@@ -28,6 +28,7 @@ Imports:
     purrr,
     utils
 Suggests: 
+    covr,
     testthat (>= 3.0.0)
 SystemRequirements: Docker and/or Singularity (>=3.0)
 Encoding: UTF-8
