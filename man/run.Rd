@@ -12,7 +12,9 @@ run(
   workspace = NULL,
   environment_variables = NULL,
   debug = FALSE,
-  verbose = FALSE
+  verbose = FALSE,
+  stdout = "|",
+  stderr = "|"
 )
 }
 \arguments{
@@ -31,6 +33,12 @@ run(
 \item{debug}{If \code{TRUE}, a command will be printed that the user can execute to enter the container.}
 
 \item{verbose}{Whether or not to print output}
+
+\item{stdout}{What to do with standard output of the command. Default ("|") means to include it as an item in the results list.
+If it is a string other than "|" and "", then it is taken as a file name and the output is redirected to this file.}
+
+\item{stderr}{What to do with standard error of the command. Default ("|") means to include it as an item in the results list.
+If it is a string other than "|" and "", then it is taken as a file name and the output is redirected to this file.}
 }
 \description{
 Run a containerised command, and wait until finished

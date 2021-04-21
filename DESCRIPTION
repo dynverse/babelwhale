@@ -1,6 +1,6 @@
 Package: babelwhale
 Title: Talking to 'Docker' and 'Singularity' Containers
-Version: 1.0.2
+Version: 1.0.3
 Authors@R: 
     c(person(given = "Robrecht",
              family = "Cannoodt",
@@ -24,14 +24,12 @@ Imports:
     crayon,
     dplyr,
     dynutils,
-    processx,
+    processx (>= 3.5.0),
     purrr,
     utils
 Suggests: 
-    testthat
-ByteCompile: true
+    testthat (>= 3.0.0)
+SystemRequirements: Docker and/or Singularity (>=3.0)
 Encoding: UTF-8
-LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-SystemRequirements: Docker and/or Singularity (>=3.0)
