@@ -28,6 +28,6 @@ for (config in configs) {
       stderr <- c()
     }
 
-    expect_true(length(stderr) == 0)
+    expect_true(length(stderr) == 0, info = paste0("Content of stderr = {\n", output$stderr, "}"))
   })
 }
