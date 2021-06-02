@@ -78,7 +78,7 @@ run <- function(
   }
 
   # add tmpdir to environment variables
-  environment_variables <- c(environment_variables, "TMPDIR=/tmp2")
+  environment_variables <- c(environment_variables, config$environment_variables, "TMPDIR=/tmp2")
 
 
   #################################

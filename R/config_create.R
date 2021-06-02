@@ -16,13 +16,6 @@ detect_backend <- function() {
 #'
 #' @param backend Which backend to use. Can be either `"docker"` or `"singularity"`.
 #'
-#' @usage
-#' create_config(
-#'   backend =
-#'     get_env_or_null("BABELWHALE_BACKEND") \%||\%
-#'     detect_backend()
-#' )
-#'
 #' @examples
 #' config <- create_docker_config()
 #' set_default_config(config, permanent = FALSE)
@@ -47,28 +40,23 @@ create_config <- function(
 }
 
 #' @rdname create_config
+#' @param environment_variables A character vector of environment variables. Format: `c("ENVVAR=VALUE")`.
 #' @export
-create_docker_config <- function() {
-  list(backend = "docker")
+create_docker_config <- function(environment_variables = character(0)) {
+  list(backend = "docker", environment_variables = environment_variables)
 }
 
 #' @param cache_dir A folder in which to store the singularity images. A container typically requires 100MB to 2GB.
-#'
-#' @usage
-#' create_singularity_config(
-#'   cache_dir =
-#'     get_env_or_null("SINGULARITY_CACHEDIR") \%||\%
-#'     ".singularity/"
-#' )
-#'
 #' @rdname create_config
 #' @export
 create_singularity_config <- function(
-  cache_dir = get_env_or_null("SINGULARITY_CACHEDIR") %||% ".singularity/"
+  cache_dir = get_env_or_null("SINGULARITY_CACHEDIR") %||% ".singularity/",
+  environment_variables = character(0)
 ) {
   dir.create(cache_dir, recursive = TRUE, showWarnings = FALSE)
-  lst(
+  list(
     backend = "singularity",
-    cache_dir
+    cache_dir = cache_dir,
+    environment_variables = environment_variables
   )
 }

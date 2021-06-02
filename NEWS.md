@@ -6,6 +6,8 @@
 
 * MINOR CHANGE: Change maintainer from Wouter to Robrecht.
 
+* MINOR CHANGE: Added an `environment_variables` to the singularity and docker config.
+
 # babelwhale 1.0.1 (03-10-2019)
 
 * BUG FIX `set_config_default()`: Fixed refactoring error; use `saveRDS` instead of `save`.

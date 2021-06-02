@@ -9,17 +9,14 @@
 \title{Backend configuration for containerisation}
 \usage{
 create_config(
-  backend =
-    get_env_or_null("BABELWHALE_BACKEND") \%||\%
-    detect_backend()
+  backend = get_env_or_null("BABELWHALE_BACKEND") \%||\% detect_backend()
 )
 
-create_docker_config()
+create_docker_config(environment_variables = character(0))
 
 create_singularity_config(
-  cache_dir =
-    get_env_or_null("SINGULARITY_CACHEDIR") \%||\%
-    ".singularity/"
+  cache_dir = get_env_or_null("SINGULARITY_CACHEDIR") \%||\% ".singularity/",
+  environment_variables = character(0)
 )
 
 get_default_config()
@@ -28,6 +25,8 @@ set_default_config(config, permanent = TRUE)
 }
 \arguments{
 \item{backend}{Which backend to use. Can be either \code{"docker"} or \code{"singularity"}.}
+
+\item{environment_variables}{A character vector of environment variables. Format: \code{c("ENVVAR=VALUE")}.}
 
 \item{cache_dir}{A folder in which to store the singularity images. A container typically requires 100MB to 2GB.}
 
