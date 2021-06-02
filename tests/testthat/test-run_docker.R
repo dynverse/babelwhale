@@ -23,7 +23,7 @@ for (config in configs) {
 
     stderr <- output$stderr
     if (stderr != "") {
-      stderr <- stderr %>% strsplit("\n") %>% .[!grepl("^INFO: ", .)]
+      stderr <- stderr %>% strsplit("\n") %>% first() %>% .[!grepl("^INFO: ", .)]
     } else {
       stderr <- c()
     }
