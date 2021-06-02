@@ -3,8 +3,9 @@
 \docType{package}
 \name{babelwhale}
 \alias{babelwhale}
-\alias{babelwhale-package}
 \title{Talking to both Docker and Singularity containers from R}
 \description{
-Talking to both Docker and Singularity containers from R
+Provides a unified interface to interact with
+docker' and 'singularity' containers.  You can execute a command
+inside a container, mount a volume or copy a file.
 }

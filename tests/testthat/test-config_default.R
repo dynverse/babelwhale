@@ -1,8 +1,7 @@
 context("Testing config_default")
 
 test_that("Testing that config_default functions work", {
-  skip_on_appveyor()
-  skip_on_travis_mac()
+  skip_on_github_actions()
   skip_on_cran()
 
   docker_config <- create_docker_config()

@@ -1,9 +1,13 @@
 
 # babelwhale: talk to docker and singularity from R
 
-[![](https://travis-ci.org/dynverse/babelwhale.svg?branch=master)](https://travis-ci.org/dynverse/babelwhale)
+<!-- badges: start -->
+
+[![R-CMD-check](https://github.com/dynverse/babelwhale/workflows/R-CMD-check/badge.svg)](https://github.com/dynverse/babelwhale/actions)
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/babelwhale)](https://cran.r-project.org/package=babelwhale)
-[![](https://codecov.io/gh/dynverse/babelwhale/branch/master/graph/badge.svg)](https://codecov.io/gh/dynverse/babelwhale)
+[![Codecov test
+coverage](https://codecov.io/gh/dynverse/babelwhale/branch/master/graph/badge.svg)](https://codecov.io/gh/dynverse/babelwhale?branch=master)
+<!-- badges: end -->
 
 Specify docker or singularity
 
@@ -37,7 +41,7 @@ Get a file from a container
 read_file("alpine", "/etc/alpine-release")
 ```
 
-    ## [1] "3.10.0"
+    ## [1] "3.13.5"
 
 ## Latest changes
 
@@ -46,11 +50,17 @@ list of changes.
 
 <!-- This section gets automatically generated from NEWS.md -->
 
-### Recent changes in babelwhale 1.0.1
+### Recent changes in babelwhale 1.0.2
 
-  - Fix issue with permanent saving of config.
+-   BUG FIX `test_docker_installation()`: Use `docker info` to check
+    whether docker is available.
 
-### Recent changes in babelwhale 1.0.0 (28-06-2019)
+-   BUG FIX: Redirect stdout and stderr to files to avoid processx hangs
+    (\#24, thanks @joelnitta!).
 
-  - Release of babelwhale, a package to run docker and singularity
-    containers from R.
+-   MINOR CHANGE: Change maintainer from Wouter to Robrecht.
+
+### Recent changes in babelwhale 1.0.1 (03-10-2019)
+
+-   BUG FIX `set_config_default()`: Fixed refactoring error; use
+    `saveRDS` instead of `save`.

@@ -10,11 +10,8 @@ for (config in configs) {
 
   set_default_config(config, permanent = FALSE)
 
-  skip_on_appveyor()
-  skip_on_travis_mac()
   skip_on_cran()
-
-  if (config$backend == "singularity") skip_on_travis()
+  skip_on_github_actions()
 
   test_that(paste0("babelwhale can run a ", config$backend), {
     # warm up
@@ -23,6 +20,14 @@ for (config in configs) {
     output <- run("alpine", "echo", "hello")
     expect_equal(output$stdout, "hello\n")
     expect_equal(output$status, 0)
-    expect_equal(output$stderr, "")
+
+    stderr <- output$stderr
+    if (stderr != "") {
+      stderr <- stderr %>% strsplit("\n") %>% first() %>% .[!grepl("^INFO: ", .)]
+    } else {
+      stderr <- c()
+    }
+
+    expect_true(length(stderr) == 0, info = paste0("Content of stderr = {\n", output$stderr, "}"))
   })
 }

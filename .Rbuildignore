@@ -8,3 +8,7 @@
 ^appveyor\.yml$
 README.Rmd
 cran-comments.md
+^LICENSE\.md$
+^LICENSE\.md$
+^\.github$
+^revdep$

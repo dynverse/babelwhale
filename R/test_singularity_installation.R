@@ -34,10 +34,12 @@ test_singularity_installation <- function(detailed = FALSE) {
       )))
     }
 
-    if (output$stdout < "3.0") {
+    major_version <- as.integer(gsub("^([^.]*)\\..*", "\\1", output$stdout))
+
+    if (major_version < 3) {
       stop(crayon::red(paste0(
         "\u274C An older version of Singularity was detected (", output$stdout, "). ",
-        "Install the latest stable release from: https://github.com/sylabs/singularity/releases."
+        "Install the latest stable release following the installation instructions at https://sylabs.io/docs/."
       )))
     }
 

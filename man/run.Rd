@@ -4,14 +4,25 @@
 \alias{run}
 \title{Run a containerised command, and wait until finished}
 \usage{
-run(container_id, command, args = NULL, volumes = NULL,
-  workspace = NULL, environment_variables = NULL, debug = FALSE,
-  verbose = FALSE)
+run(
+  container_id,
+  command,
+  args = NULL,
+  volumes = NULL,
+  workspace = NULL,
+  environment_variables = NULL,
+  debug = FALSE,
+  verbose = FALSE,
+  stdout = "|",
+  stderr = "|"
+)
 }
 \arguments{
 \item{container_id}{The name of the container, usually the repository name on dockerhub.}
 
-\item{command}{Character scalar, the command to run.}
+\item{command}{Character scalar, the command to run. If you are
+running \code{.bat} or \code{.cmd} files on Windows, make sure you read the
+'Batch files' section in the \link[processx]{process} manual page.}
 
 \item{args}{Character vector, arguments to the command.}
 
@@ -24,6 +35,14 @@ run(container_id, command, args = NULL, volumes = NULL,
 \item{debug}{If \code{TRUE}, a command will be printed that the user can execute to enter the container.}
 
 \item{verbose}{Whether or not to print output}
+
+\item{stdout}{What to do with standard output of the command. Default (\code{"|"}) means to include it as an item in the results list.
+If it is the empty string (\code{""}), then the child process inherits the standard output stream of the R process.
+If it is a string other than \code{"|"} and \code{""}, then it is taken as a file name and the output is redirected to this file.}
+
+\item{stderr}{What to do with standard error of the command. Default ("|") means to include it as an item in the results list.
+If it is the empty string (\code{""}), then the child process inherits the standard error stream of the R process.
+If it is a string other than \code{"|"} and \code{""}, then it is taken as a file name and the standard error is redirected to this file.}
 }
 \description{
 Run a containerised command, and wait until finished
