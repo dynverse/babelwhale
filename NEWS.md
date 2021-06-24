@@ -1,3 +1,7 @@
+# babelwhale 1.0.3
+
+* BUG FIX `detect_backend()`: Print helpful message when neither docker or singularity are installed.
+
 # babelwhale 1.0.2
 
 * BUG FIX `test_docker_installation()`: Use `docker info` to check whether docker is available.
