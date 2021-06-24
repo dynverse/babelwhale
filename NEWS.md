@@ -1,6 +1,6 @@
 # babelwhale 1.0.3
 
-* BUG FIX `detect_backend()`: Print helpful message when neither docker or singularity are installed.
+* BUG FIX `detect_backend()`: Print helpful message when neither docker or singularity are installed (Thanks @KforKuma).
 
 # babelwhale 1.0.2
 
