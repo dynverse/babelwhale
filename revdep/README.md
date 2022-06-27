@@ -10,18 +10,18 @@
 |collate  |en_GB.UTF-8                     |
 |ctype    |en_GB.UTF-8                     |
 |tz       |Europe/Brussels                 |
-|date     |2021-06-02                      |
+|date     |2021-06-24                      |
 
 # Dependencies
 
 |package       |old        |new        |Δ  |
 |:-------------|:----------|:----------|:--|
-|babelwhale    |1.0.1      |1.0.2      |*  |
+|babelwhale    |1.0.2      |1.0.3      |*  |
 |assertthat    |0.2.1      |0.2.1      |   |
 |cli           |2.5.0      |2.5.0      |   |
 |crayon        |1.4.1      |1.4.1      |   |
 |desc          |1.3.0      |1.3.0      |   |
-|dplyr         |1.0.6      |1.0.6      |   |
+|dplyr         |1.0.7      |1.0.7      |   |
 |dynutils      |1.0.6      |1.0.6      |   |
 |ellipsis      |0.3.2      |0.3.2      |   |
 |fansi         |0.5.0      |0.5.0      |   |
@@ -39,7 +39,7 @@
 |Rcpp          |1.0.6      |1.0.6      |   |
 |RcppArmadillo |0.10.5.0.0 |0.10.5.0.0 |   |
 |RcppParallel  |5.1.4      |5.1.4      |   |
-|remotes       |2.3.0      |2.3.0      |   |
+|remotes       |2.4.0      |2.4.0      |   |
 |rlang         |0.4.11     |0.4.11     |   |
 |rprojroot     |2.0.2      |2.0.2      |   |
 |stringi       |1.6.2      |1.6.2      |   |

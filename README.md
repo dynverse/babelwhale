@@ -41,7 +41,7 @@ Get a file from a container
 read_file("alpine", "/etc/alpine-release")
 ```
 
-    ## [1] "3.13.5"
+    ## [1] "3.14.0"
 
 ## Latest changes
 
@@ -49,6 +49,11 @@ Check out `news(package = "dynutils")` or [NEWS.md](NEWS.md) for a full
 list of changes.
 
 <!-- This section gets automatically generated from NEWS.md -->
+
+### Recent changes in babelwhale 1.0.3
+
+-   BUG FIX `detect_backend()`: Print helpful message when neither
+    docker or singularity are installed (Thanks @KforKuma).
 
 ### Recent changes in babelwhale 1.0.2
 
@@ -60,7 +65,5 @@ list of changes.
 
 -   MINOR CHANGE: Change maintainer from Wouter to Robrecht.
 
-### Recent changes in babelwhale 1.0.1 (03-10-2019)
-
--   BUG FIX `set_config_default()`: Fixed refactoring error; use
-    `saveRDS` instead of `save`.
+-   MINOR CHANGE: Added an `environment_variables` to the singularity
+    and docker config.

@@ -1,5 +1,11 @@
 detect_backend <- function() {
   witches <- Sys.which(c("docker", "singularity"))
+  if (all(witches == "")) {
+    stop(
+      "Couldn't detect docker or singularity. Are you sure either is installed?\n",
+      "Please run `test_docker_installation(detailed = TRUE)` or `test_singularity_installation(detailed = TRUE)` to verify."
+    )
+  }
   witches %>% keep(function(x) x != "") %>% names() %>% first()
 }
 
