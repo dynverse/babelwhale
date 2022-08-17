@@ -72,16 +72,16 @@ run_auto_mount <- function(
   # Specify all volumes: one per file, plus working directory
   volumes <- unique(
     c(
-      glue::glue("{in_dir}:/{prefix}_{1:length(in_dir)}"),
+      glue::glue("{in_dir}:/{prefix}_{seq_along(in_dir)}"),
       wd_volume
     ))
 
   # Replace file arg paths with location in container
-  files_in_container <- glue::glue("/{prefix}_{1:length(in_dir)}/{in_file}")
+  files_in_container <- glue::glue("/{prefix}_{seq_along(in_dir)}/{in_file}")
   args[names(args) == "file"] <- files_in_container
 
   # Run docker via babelwhale
-  babelwhale::run(
+  run(
     container_id = container_id,
     command = command,
     args = args,
