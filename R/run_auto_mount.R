@@ -59,25 +59,27 @@ run_auto_mount <- function(
   # Make (most likely) unique prefix for folder name that
   # won't conflict with an existing folder in the container
   # based on the hash of the container id and command
-  prefix <- digest::digest(c(container_id, command))
+  prefix <- paste0("/babelwhale/", digest::digest(c(container_id, command)))
 
   # Specify volume mounting for working directory
   wd_volume <- NULL
   if (!is.null(wd)) {
     wd_path <- fs::path_abs(wd)
-    if (is.null(wd_in_container)) wd_in_container <- glue::glue("/{prefix}_wd")
+    if (is.null(wd_in_container)) wd_in_container <- glue::glue("{prefix}_wd")
     wd_volume <- glue::glue("{wd_path}:{wd_in_container}")
   }
 
   # Specify all volumes: one per file, plus working directory
-  volumes <- unique(
-    c(
-      glue::glue("{in_dir}:/{prefix}_{seq_along(in_dir)}"),
-      wd_volume
-    ))
+  dirs_to_mount <- unique(in_dir)
+  mount_path <- glue::glue("{prefix}{dirs_to_mount}")
+  volumes <- c(
+    glue::glue("{dirs_to_mount}:{mount_path}"),
+    wd_volume
+  )
 
   # Replace file arg paths with location in container
-  files_in_container <- glue::glue("/{prefix}_{seq_along(in_dir)}/{in_file}")
+  out_dir <- purrr::set_names(mount_path, dirs_to_mount)[in_dir]
+  files_in_container <- glue::glue("{out_dir}/{in_file}")
   args[names(args) == "file"] <- files_in_container
 
   # Run docker via babelwhale
