@@ -6,7 +6,7 @@
 [![R-CMD-check](https://github.com/dynverse/babelwhale/workflows/R-CMD-check/badge.svg)](https://github.com/dynverse/babelwhale/actions)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/babelwhale)](https://cran.r-project.org/package=babelwhale)
 [![Codecov test
-coverage](https://codecov.io/gh/dynverse/babelwhale/branch/master/graph/badge.svg)](https://codecov.io/gh/dynverse/babelwhale?branch=master)
+coverage](https://app.codecov.io/gh/dynverse/babelwhale/branch/master/graph/badge.svg)](https://app.codecov.io/gh/dynverse/babelwhale?branch=master)
 <!-- badges: end -->
 
 Specify docker or singularity
