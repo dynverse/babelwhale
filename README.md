@@ -4,7 +4,7 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/dynverse/babelwhale/workflows/R-CMD-check/badge.svg)](https://github.com/dynverse/babelwhale/actions)
-[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/babelwhale)](https://cran.r-project.org/package=babelwhale)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/babelwhale)](https://cran.r-project.org/package=babelwhale)
 [![Codecov test
 coverage](https://codecov.io/gh/dynverse/babelwhale/branch/master/graph/badge.svg)](https://codecov.io/gh/dynverse/babelwhale?branch=master)
 <!-- badges: end -->
@@ -41,7 +41,7 @@ Get a file from a container
 read_file("alpine", "/etc/alpine-release")
 ```
 
-    ## [1] "3.14.0"
+    ## [1] "3.16.2"
 
 ## Latest changes
 
@@ -50,20 +50,13 @@ list of changes.
 
 <!-- This section gets automatically generated from NEWS.md -->
 
+### Recent changes in babelwhale 1.1.0
+
+-   NEW FUNCTIONALITY `run_auto_mount()`: Added helper function for
+    letting `babelwhale` figure out which directories to mount
+    automatically (#26, thanks @joelnitta!).
+
 ### Recent changes in babelwhale 1.0.3
 
 -   BUG FIX `detect_backend()`: Print helpful message when neither
     docker or singularity are installed (Thanks @KforKuma).
-
-### Recent changes in babelwhale 1.0.2
-
--   BUG FIX `test_docker_installation()`: Use `docker info` to check
-    whether docker is available.
-
--   BUG FIX: Redirect stdout and stderr to files to avoid processx hangs
-    (\#24, thanks @joelnitta!).
-
--   MINOR CHANGE: Change maintainer from Wouter to Robrecht.
-
--   MINOR CHANGE: Added an `environment_variables` to the singularity
-    and docker config.

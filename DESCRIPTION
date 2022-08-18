@@ -1,6 +1,6 @@
 Package: babelwhale
 Title: Talking to 'Docker' and 'Singularity' Containers
-Version: 1.0.3
+Version: 1.1.0
 Authors@R: 
     c(person(given = "Robrecht",
              family = "Cannoodt",
@@ -11,7 +11,12 @@ Authors@R:
              family = "Saelens",
              role = "aut",
              email = "wouter.saelens@gmail.com",
-             comment = c(ORCID = "0000-0002-7114-6248", github = "zouter")))
+             comment = c(ORCID = "0000-0002-7114-6248", github = "zouter")),
+      person(given = "Joel",
+             family = "Nitta",
+             role = "aut",
+             email = "joelnitta@gmail.com",
+             comment = c(ORCID = "0000-0003-4719-7472", github = "joelnitta")))
 Description: Provides a unified interface to interact with
     'docker' and 'singularity' containers.  You can execute a command
     inside a container, mount a volume or copy a file.
@@ -36,4 +41,4 @@ Suggests:
 SystemRequirements: Docker and/or Singularity (>=3.0)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
