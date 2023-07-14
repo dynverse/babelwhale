@@ -1,3 +1,7 @@
+# babelwhale 1.2.0
+
+* BUG FIX: `test_singularity_installation()` no longer fails when apptainer is used instead of singularity.
+
 # babelwhale 1.1.0
 
 * NEW FUNCTIONALITY `run_auto_mount()`: Added helper function for letting `babelwhale` figure out which directories to mount automatically (#26, thanks @joelnitta!).
