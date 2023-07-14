@@ -41,7 +41,7 @@ test_singularity_installation <- function(detailed = FALSE) {
       error = function(e) {list(status = 1, message = e$message)}
     )
 
-    if (!grepl("apptainer", output2$stdout))
+    if (!grepl("apptainer", output2$stdout)) {
       major_version <- as.integer(gsub("^([^.]*)\\..*", "\\1", output$stdout))
 
       if (major_version < 3) {
