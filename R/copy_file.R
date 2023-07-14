@@ -35,7 +35,7 @@ copy_file <- function(
       command = "cp",
       args = c(path_container, "/copy_mount/"),
       volumes = paste0(temp_folder, ":/copy_mount"),
-      verbose = T
+      verbose = TRUE
     )
 
     file.copy(file.path(temp_folder, basename(path_container)), path_local)
