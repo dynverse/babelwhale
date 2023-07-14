@@ -15,7 +15,8 @@ create_config(
 create_docker_config(environment_variables = character(0))
 
 create_singularity_config(
-  cache_dir = get_env_or_null("SINGULARITY_CACHEDIR") \%||\% ".singularity/",
+  cache_dir = get_env_or_null("SINGULARITY_CACHEDIR") \%||\%
+    get_env_or_null("APPTAINER_CACHEDIR") \%||\% ".singularity/",
   environment_variables = character(0)
 )
 
@@ -39,6 +40,10 @@ It is advised to define the \code{"BABELWHALE_BACKEND"} environment variable as 
 
 When using singularity, also define the \code{"SINGULARITY_CACHEDIR"} environment variable,
 which is the folder where the singularity images will be cached.
+
+When using apptainer, also define the \code{"APPTAINER_CACHEDIR"} environment variable,
+which is the folder where the singularity images will be cached.
+
 Each TI method will require about 1GB of space.
 
 Alternatively, you can create a config and save it using \code{set_default_config()}.

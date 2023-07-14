@@ -36,12 +36,7 @@ test_singularity_installation <- function(detailed = FALSE) {
 
     message(crayon::green(paste0("\u2714 Singularity is installed")))
 
-    output2 <- tryCatch(
-      processx::run("singularity", "--help", error_on_status = FALSE, stderr_callback = print_processx, timeout = 2),
-      error = function(e) {list(status = 1, message = e$message)}
-    )
-
-    if (!grepl("apptainer", output2$stdout)) {
+    if (!is_singularity_apptainer()) {
       major_version <- as.integer(gsub("^([^.]*)\\..*", "\\1", output$stdout))
 
       if (major_version < 3) {

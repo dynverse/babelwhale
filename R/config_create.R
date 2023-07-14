@@ -16,7 +16,11 @@ detect_backend <- function() {
 #'
 #' When using singularity, also define the `"SINGULARITY_CACHEDIR"` environment variable,
 #' which is the folder where the singularity images will be cached.
-#'  Each TI method will require about 1GB of space.
+#'
+#' When using apptainer, also define the `"APPTAINER_CACHEDIR"` environment variable,
+#' which is the folder where the singularity images will be cached.
+#' 
+#' Each TI method will require about 1GB of space.
 #'
 #' Alternatively, you can create a config and save it using `set_default_config()`.
 #'
@@ -56,13 +60,14 @@ create_docker_config <- function(environment_variables = character(0)) {
 #' @rdname create_config
 #' @export
 create_singularity_config <- function(
-  cache_dir = get_env_or_null("SINGULARITY_CACHEDIR") %||% ".singularity/",
+  cache_dir = get_env_or_null("SINGULARITY_CACHEDIR") %||% get_env_or_null("APPTAINER_CACHEDIR") %||% ".singularity/",
   environment_variables = character(0)
 ) {
   dir.create(cache_dir, recursive = TRUE, showWarnings = FALSE)
   list(
     backend = "singularity",
     cache_dir = cache_dir,
-    environment_variables = environment_variables
+    environment_variables = environment_variables,
+    is_apptainer = is_singularity_apptainer()
   )
 }

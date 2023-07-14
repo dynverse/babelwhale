@@ -117,15 +117,29 @@ run <- function(
     tmpdir <- dynutils::safe_tempdir("singularity_tmpdir")
     on.exit(unlink(tmpdir, force = TRUE, recursive = TRUE))
 
-    processx_env <- c(
-      set_names(
-        environment_variables %>% gsub("^.*=", "", .),
-        environment_variables %>% gsub("^(.*)=.*$", "SINGULARITYENV_\\1", .)
-      ),
-      "SINGULARITY_TMPDIR" = tmpdir,
-      "SINGULARITY_CACHEDIR" = config$cache_dir,
-      "PATH" = Sys.getenv("PATH") # pass the path along
-    )
+    processx_env <-
+      if (config$is_apptainer) {
+        c(
+          set_names(
+            environment_variables %>% gsub("^.*=", "", .),
+            environment_variables %>% gsub("^(.*)=.*$", "APPTAINERENV_\\1", .)
+          ),
+          "APPTAINER_TMPDIR" = tmpdir,
+          "APPTAINER_CACHEDIR" = config$cache_dir,
+          "PATH" = Sys.getenv("PATH") # pass the path along
+        )
+
+      } else {
+        c(
+          set_names(
+            environment_variables %>% gsub("^.*=", "", .),
+            environment_variables %>% gsub("^(.*)=.*$", "SINGULARITYENV_\\1", .)
+          ),
+          "SINGULARITY_TMPDIR" = tmpdir,
+          "SINGULARITY_CACHEDIR" = config$cache_dir,
+          "PATH" = Sys.getenv("PATH") # pass the path along
+        )
+      }
 
     container <- paste0("docker://", container_id)
 
