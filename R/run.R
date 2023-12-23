@@ -141,7 +141,9 @@ run <- function(
         )
       }
 
-    container <- paste0("docker://", container_id)
+    container_sif <- paste0("~/", gsub("[/,:]", "_", container_id), ".sif")
+    container <- container_sif
+    #container <- paste0("docker://", container_id)
 
     # determine command arguments
     processx_args <- c(
