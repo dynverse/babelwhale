@@ -141,7 +141,7 @@ run <- function(
         )
       }
 
-    container_sif <- paste0(gsub("[/,:]", "_", container_id), ".sif")
+    container_sif <- paste0(getwd(), "/", gsub("[/,:]", "_", container_id), ".sif")
     container <- container_sif
     #container <- paste0("docker://", container_id)
 
