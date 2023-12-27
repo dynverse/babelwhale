@@ -142,9 +142,11 @@ run <- function(
       }
 
     local_sif_path <- Sys.getenv("LOCAL_SIF_PATH")
-    container_sif <- paste0(local_sif_path, "/", gsub("[/,:]", "_", container_id), ".sif")
-    container <- container_sif
-    #container <- paste0("docker://", container_id)
+    if (local_sif_path == "") {
+      container <- paste0("docker://", container_id)	
+    } else {
+      container <- paste0(local_sif_path, "/", gsub("[/,:]", "_", container_id), ".sif")
+    }
 
     # determine command arguments
     processx_args <- c(

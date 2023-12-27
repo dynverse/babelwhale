@@ -15,9 +15,13 @@ pull_container <- function(container_id) {
 
   } else if (config$backend == "singularity") {
     local_sif_path <- Sys.getenv("LOCAL_SIF_PATH")
-    container_sif <- paste0(local_sif_path, "/", gsub("[/,:]", "_", container_id), ".sif")
-    if (!file.exists(container_sif)) {
-      processx::run("singularity", c("pull", container_sif, paste0("docker://", container_id)), echo_cmd = TRUE, echo = FALSE)  
+    if (local_sif_path == "") { 
+      processx::run("singularity", c("exec", paste0("docker://", container_id), "echo", "hi"), echo_cmd = TRUE, echo = FALSE)
+    } else {
+      container_sif <- paste0(local_sif_path, "/", gsub("[/,:]", "_", container_id), ".sif")
+      if (!file.exists(container_sif)) {
+        processx::run("singularity", c("pull", container_sif, paste0("docker://", container_id)), echo_cmd = TRUE, echo = FALSE)  
+      }
     }
   }
 
